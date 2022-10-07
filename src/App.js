@@ -1,24 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import { Route, Switch, Router } from 'wouter'
+import SideBar from './components/UI/SideBar';
+import Home from './pages/home/Home';
+import Encuestas from './pages/encuestas/Encuestas';
+import NewEncuesta from './pages/encuestas/NewEncuesta';
+import AddPreguntas from './pages/encuestas/AddPreguntas';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <SideBar />
+
+      <div id="detail">
+        <Switch>
+          <Route path='/' component={Home} />
+          <Route path='/encuestas' component={Encuestas} />
+          <Route path='/encuesta/new' component={NewEncuesta} />
+          <Route path='/encuesta/add/:idEncuesta' component={AddPreguntas} />
+
+        </Switch>
+
+      </div>
+
+
+
+
+    </Router>
+
   );
 }
 
