@@ -1,4 +1,4 @@
-export const fetchAPI = ({endpoint, data, method }) => {
+export const fetchAPI = ({endpoint, data, method, signal }) => {
 
     const url = `http://localhost:3000/api/${endpoint}`;
 
@@ -12,6 +12,7 @@ export const fetchAPI = ({endpoint, data, method }) => {
                 'Content-type': 'application/json',
 
             },
+            signal,
             body: JSON.stringify(data)
         })
 

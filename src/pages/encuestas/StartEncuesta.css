@@ -1,0 +1,23 @@
+.opciones .list-group-item:hover {
+    cursor: pointer;
+
+}
+
+.selected {
+    background-color: #1db900;
+    border-left: 4px solid #0f6300;
+    color: #fff;
+}
+
+.active::hover {
+    background-color: #1db900;
+    border-left: 4px solid #0f6300;
+    color: #fff;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

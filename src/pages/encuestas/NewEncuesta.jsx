@@ -52,7 +52,7 @@ const NewEncuesta = () => {
             method:'POST',
             data: state.values
         })
-        .then( () =>  setLocation("/encuestas"))
+        .then( () =>  setLocation("/"))
         .catch(console.log)
     }
 

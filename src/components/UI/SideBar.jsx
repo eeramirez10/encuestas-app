@@ -29,7 +29,7 @@ const SideBar = () => {
                     </form>
                     <div >
                         <button >
-                        <Link  to='/encuesta/new'> New </Link>
+                            <Link  to='/encuesta/new' > New </Link>
                         </button>
 
                         

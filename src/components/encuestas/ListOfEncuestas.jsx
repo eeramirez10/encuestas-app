@@ -11,15 +11,15 @@ const ListOfEncuestas = ({ encuestas }) => {
                 encuestas.map((encuesta) =>
 
                     <Card
-                        bg={'black'}
+                        bg={'primary'}
                         key={encuesta._id}
                         text={'white'}
                         style={{ width: '18rem' }}
                         className="mb-2"
                     >
-                        <Card.Header>Encuesta</Card.Header>
+                        <Card.Header>{encuesta.nombre} </Card.Header>
                         <Card.Body>
-                            <Card.Title> {encuesta.nombre} </Card.Title>
+                            {/* <Card.Title> {encuesta.nombre} </Card.Title> */}
                             <Card.Text>
                                 {encuesta.descripcion}
                             </Card.Text>
@@ -44,8 +44,13 @@ const ListOfEncuestas = ({ encuestas }) => {
                                             </Link>
 
                                         </Button>
-                                        <Button variant="primary" className='mx-2'>Editar</Button>
+                                        <Button variant="primary" className='m-2'>Editar</Button>
                                         <Button variant="danger">Eliminar</Button>
+
+                                        <Button  variant="success">
+                                            <Link to={`/encuesta/start/${encuesta._id}/null`} > Iniciar Encuesta </Link>
+                                            
+                                        </Button>
 
                                     </>
 
