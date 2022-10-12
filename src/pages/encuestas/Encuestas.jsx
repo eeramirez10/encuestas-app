@@ -7,29 +7,40 @@ const Encuestas = () => {
 
     const [encuestas, setEncuestas] = useState([])
 
-    useEffect(()=>{
+    useEffect(() => {
 
         fetchAPI({
-            endpoint:'busqueda/coleccion/encuestas/todo',
-            method:'GET'
+            endpoint: 'busqueda/coleccion/encuestas/todo',
+            method: 'GET'
         })
-        .then( async (encuestas) => {
-            const resp = await encuestas.json()
+            .then(async (encuestas) => {
+                const resp = await encuestas.json()
 
-            setEncuestas([...resp.data])
-        })
+                setEncuestas([...resp.data])
+            })
 
-    },[setEncuestas])
+    }, [setEncuestas])
 
     console.log(encuestas)
-  return (
-    
-    <>
-        <ListOfEncuestas  encuestas={encuestas} />
-    </>
+    return (
 
-    
-  )
+        <>
+
+            {
+                !Array.isArray(encuestas) || !encuestas.length ?
+
+                    <h2> No hay encuestas </h2>
+
+                    :
+
+                    <ListOfEncuestas encuestas={encuestas} />
+
+            }
+
+        </>
+
+
+    )
 }
 
 export default Encuestas

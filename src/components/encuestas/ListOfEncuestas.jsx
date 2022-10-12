@@ -1,9 +1,15 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import { Link } from 'wouter'
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import { useLocation } from 'wouter';
 
-const ListOfEncuestas = ({ encuestas }) => {
+const ListOfEncuestas = ({ encuestas, params }) => {
+    const [location, setLocation] = useLocation();
+
+    const handleClick = (path) => {
+        setLocation(path)
+    }
     return (
         <>
 
@@ -11,10 +17,10 @@ const ListOfEncuestas = ({ encuestas }) => {
                 encuestas.map((encuesta) =>
 
                     <Card
-                        bg={'primary'}
+                        border={'primary'}
                         key={encuesta._id}
-                        text={'white'}
-                        style={{ width: '18rem' }}
+                       
+                        style={{ width: '20rem' }}
                         className="mb-2"
                     >
                         <Card.Header>{encuesta.nombre} </Card.Header>
@@ -24,40 +30,55 @@ const ListOfEncuestas = ({ encuestas }) => {
                                 {encuesta.descripcion}
                             </Card.Text>
 
+                        </Card.Body>
+                        <Card.Body>
+
                             {
                                 encuesta.preguntas.length === 0
                                     ?
-                                    <Button variant="warning" >
 
-                                        <Link to={`/encuesta/add/${encuesta._id}`}>
-                                            Agregar preguntas
-                                        </Link>
+                                    <Button>
 
                                     </Button>
 
+                                    // <Link  to={`/encuesta/add/${encuesta._id}`}>
+                                    //     Agregar preguntas
+                                    // </Link>
+
+
+
                                     :
                                     <>
-                                        <Button variant="warning" >
 
-                                            <Link to={`/encuesta/add/${encuesta._id}`}>
+                                        <ButtonGroup size="sm" className="mb-2">
+
+                                            <Button
+                                                variant="warning"
+                                                onClick={() => handleClick(`/encuesta/add/${encuesta._id}`)}
+                                            >
                                                 Agregar preguntas
-                                            </Link>
+                                            </Button>
+                                            <Button variant="primary" >Editar</Button>
+                                            <Button variant="danger">Eliminar</Button>
 
-                                        </Button>
-                                        <Button variant="primary" className='m-2'>Editar</Button>
-                                        <Button variant="danger">Eliminar</Button>
+                                            <Button
+                                                variant="success"
+                                                onClick={() => handleClick(`/encuesta/start/${encuesta._id}/null`)}
+                                            >
+                                                Iniciar Encuesta
 
-                                        <Button  variant="success">
-                                            <Link to={`/encuesta/start/${encuesta._id}/null`} > Iniciar Encuesta </Link>
-                                            
-                                        </Button>
+                                            </Button>
+
+
+                                        </ButtonGroup>
+                                    
+
 
                                     </>
 
 
 
                             }
-
 
 
 
