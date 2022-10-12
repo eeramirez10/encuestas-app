@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+
 import ListOfEncuestas from '../../components/encuestas/ListOfEncuestas'
 
 import { fetchAPI } from '../../helpers/fetch'
@@ -6,6 +7,9 @@ import { fetchAPI } from '../../helpers/fetch'
 const Encuestas = () => {
 
     const [encuestas, setEncuestas] = useState([])
+    const [show, setShow] = useState(false);
+
+
 
     useEffect(() => {
 
@@ -21,7 +25,10 @@ const Encuestas = () => {
 
     }, [setEncuestas])
 
-    console.log(encuestas)
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    
     return (
 
         <>
@@ -36,6 +43,8 @@ const Encuestas = () => {
                     <ListOfEncuestas encuestas={encuestas} />
 
             }
+
+          
 
         </>
 

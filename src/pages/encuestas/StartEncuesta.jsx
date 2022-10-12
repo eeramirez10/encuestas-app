@@ -30,7 +30,7 @@ const pregunta_initial_state = {
 
 const StartEncuesta = ({ params }) => {
 
-    const [location, setLocation] = useLocation();
+    const [ , setLocation] = useLocation();
     const { idEncuesta, idUsuario } = params;
 
 
@@ -38,16 +38,17 @@ const StartEncuesta = ({ params }) => {
 
     const [current, setCurrent] = useState(0);
     const [encuesta, setEncuesta] = useState(INITIAL_STATE)
-    const [length, setLength] = useState(0)
+    const [length, setLength] = useState(null)
     const [activeIndex, setActiveIndex] = useState(null)
-
-    const [formTextarea, setFormTextarea] = useState({ descripcion: "" })
     const [preguntas, setPreguntas] = useState([])
 
     const [pregunta, setPregunta] = useState(pregunta_initial_state)
 
     const [currentUser, setCurrentUser] = useState({})
 
+    const [ IstextareaEmpty, setIsTextareaEmpty ] = useState(true)
+
+    
 
     useEffect(() => {
 
@@ -86,14 +87,14 @@ const StartEncuesta = ({ params }) => {
             controller.abort()
         }
 
-    }, [setEncuesta])
+    }, [setEncuesta,idEncuesta,idUsuario])
 
 
 
-    const prevPregunta = () => {
+    // const prevPregunta = () => {
 
-        setCurrent(current === 0 ? length - 1 : current - 1)
-    }
+    //     setCurrent(current === 0 ? length - 1 : current - 1)
+    // }
 
     const nextPregunta = () => {
 
@@ -126,6 +127,8 @@ const StartEncuesta = ({ params }) => {
     const handleOnchange = (e) => {
         const Pregunta = encuesta.preguntas[current];
 
+        setIsTextareaEmpty( !e.target.value  )
+
         setPregunta({
             _id: Pregunta._id,
             opcion: {
@@ -141,7 +144,7 @@ const StartEncuesta = ({ params }) => {
     const handleOnBlur = () => {
 
         console.log('onblur')
-
+        setActiveIndex(0)
 
     }
 
@@ -192,12 +195,8 @@ const StartEncuesta = ({ params }) => {
 
     }
 
-    if (current === length) {
 
-
-    }
-
-    
+    console.log(IstextareaEmpty)
 
 
 
@@ -209,6 +208,7 @@ const StartEncuesta = ({ params }) => {
 
         <>
             <h2> {encuesta.nombre} </h2>
+            <h4> {encuesta.descripcion} </h4>
 
 
             {
@@ -284,7 +284,7 @@ const StartEncuesta = ({ params }) => {
                                             <Button
                                                 variant="primary"
                                                 onClick={nextPregunta}
-                                                disabled={activeIndex === null}
+                                                disabled={activeIndex === null && IstextareaEmpty }
 
                                             >
                                                 Siguente
