@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import { useLocation } from 'wouter';
+import { alertError, alertSuccess, closeLoadingAlert, loadingAlert } from '../../helpers/alerts';
 import { fetchAPI } from '../../helpers/fetch';
 
 const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
@@ -85,6 +86,8 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
 
     const enviarEncuesta = async (usuario) => {
 
+        loadingAlert({ html:'Enviando correo.....' })
+
 
         const enviarCorreo = await fetchAPI({
             endpoint: 'encuesta/enviar',
@@ -97,7 +100,12 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
 
         const resp = await enviarCorreo.json();
 
-        console.log(resp)
+        if( !resp.ok){
+            closeLoadingAlert();
+            alertError({ text: resp.msg});
+        }
+
+        alertSuccess({title:"correo enviado correctamente"})
 
     }
 

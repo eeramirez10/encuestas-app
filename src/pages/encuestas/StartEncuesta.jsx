@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import './StartEncuesta.css'
 import { useLocation } from "wouter";
 import ListOfOptions from '../../components/opciones/ListOfOptions';
+import { alertError, closeLoadingAlert, loadingAlert } from '../../helpers/alerts';
 
 const INITIAL_STATE = {
     descripcion: '',
@@ -80,8 +81,6 @@ const StartEncuesta = ({ params }) => {
                 })
         }
 
-
-
         return () => {
             isMounted = false;
             controller.abort()
@@ -110,6 +109,8 @@ const StartEncuesta = ({ params }) => {
 
     const handleOnCLickOpcion = (opcion, index) => {
 
+       
+
         const option = { ...opcion }
 
         console.log(option)
@@ -122,9 +123,13 @@ const StartEncuesta = ({ params }) => {
 
 
         setActiveIndex(index)
+
+       
     }
 
     const handleOnchange = (e) => {
+
+       
         const Pregunta = encuesta.preguntas[current];
 
         setIsTextareaEmpty( !e.target.value  )
@@ -151,14 +156,21 @@ const StartEncuesta = ({ params }) => {
     const sendRespuestas = async () => {
 
 
-        console.log(preguntas)
+        loadingAlert({})
 
 
         const body = await fetchAPI({ endpoint: 'encuesta/submit', method: 'POST', data: { idUsuario: currentUser._id, idEncuesta, preguntas } })
 
         const resp = await body.json();
 
+        if (!resp.ok){
+
+            return alertError()
+        }
+
         if (resp.ok) {
+
+            closeLoadingAlert()
 
             return setLocation('/encuesta/finish')
         }

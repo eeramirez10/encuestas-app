@@ -1,6 +1,6 @@
 export const fetchAPI = ({endpoint, data, method, signal }) => {
 
-    const url = `https://encuestas-app-6ec15.web.app/api/${endpoint}`;
+    const url = `http://localhost:3000/api/${endpoint}`;
 
     if (method === 'GET') {
         return fetch(url)
