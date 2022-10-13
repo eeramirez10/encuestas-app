@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { fetchAPI } from '../../helpers/fetch';
 import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import Button from 'react-bootstrap/Button';
 import './StartEncuesta.css'
@@ -31,7 +33,7 @@ const pregunta_initial_state = {
 
 const StartEncuesta = ({ params }) => {
 
-    const [ , setLocation] = useLocation();
+    const [, setLocation] = useLocation();
     const { idEncuesta, idUsuario } = params;
 
 
@@ -47,9 +49,9 @@ const StartEncuesta = ({ params }) => {
 
     const [currentUser, setCurrentUser] = useState({})
 
-    const [ IstextareaEmpty, setIsTextareaEmpty ] = useState(true)
+    const [IstextareaEmpty, setIsTextareaEmpty] = useState(true)
 
-    
+
 
     useEffect(() => {
 
@@ -86,7 +88,7 @@ const StartEncuesta = ({ params }) => {
             controller.abort()
         }
 
-    }, [setEncuesta,idEncuesta,idUsuario])
+    }, [setEncuesta, idEncuesta, idUsuario])
 
 
 
@@ -109,7 +111,7 @@ const StartEncuesta = ({ params }) => {
 
     const handleOnCLickOpcion = (opcion, index) => {
 
-       
+
 
         const option = { ...opcion }
 
@@ -124,15 +126,15 @@ const StartEncuesta = ({ params }) => {
 
         setActiveIndex(index)
 
-       
+
     }
 
     const handleOnchange = (e) => {
 
-       
+
         const Pregunta = encuesta.preguntas[current];
 
-        setIsTextareaEmpty( !e.target.value  )
+        setIsTextareaEmpty(!e.target.value)
 
         setPregunta({
             _id: Pregunta._id,
@@ -163,7 +165,7 @@ const StartEncuesta = ({ params }) => {
 
         const resp = await body.json();
 
-        if (!resp.ok){
+        if (!resp.ok) {
 
             return alertError()
         }
@@ -219,18 +221,19 @@ const StartEncuesta = ({ params }) => {
     return (
 
         <>
-            <h2> {encuesta.nombre} </h2>
-            <h4> {encuesta.descripcion} </h4>
+
+
+
 
 
             {
 
                 current === length ?
 
-                    <Card className='my-3' >
+                    <Card  >
                         <Card.Body>
                             <Card.Title>
-                                <div className='d-flex'>
+                                <div className='text-center'>
                                     <div className='flex-grow-1'> Da click en en terminar para guardar tus respuestas  </div>
 
                                 </div>
@@ -245,7 +248,7 @@ const StartEncuesta = ({ params }) => {
                                 variant="success"
                                 onClick={sendRespuestas}
                             >
-                                 Terminar encuesta
+                                Terminar encuesta
                             </Button>
 
 
@@ -253,89 +256,107 @@ const StartEncuesta = ({ params }) => {
                     </Card>
 
                     :
-                    encuesta.preguntas.map((p, i) => (
-                        <div key={i}>
 
-                            {
-                                i === current && (
-                                    <Card className='my-3' >
-                                        <Card.Body>
-                                            <Card.Title>
-                                                <div className='d-flex'>
-                                                    <div className='flex-grow-1'> {p.descripcion}  </div>
-                                                    <div>
-                                                        {i + 1} de {length} preguntas
-                                                    </div>
-                                                </div>
-                                            </Card.Title>
-                                        </Card.Body>
+                    <Card  >
 
+                        <Card.Body  >
 
-                                        <ListOfOptions
-                                            opciones={p.opciones}
-                                            handleOnCLickOpcion={handleOnCLickOpcion}
-                                            handleOnchange={handleOnchange}
-                                            handleOnBlur={handleOnBlur}
-                                            activeIndex={activeIndex}
-                                            pregunta={pregunta}
-                                        />
+                            <Row>
+                                <Col md={6} sm={12} >
+
+                                    <div className="text-center mt-4">
+
+                                        <img
+                                            src="/img/logo-tuvansa.png" alt="..." />
+                                    </div>
+                                </Col>
+                                <Col md={6} sm={12} className="text-center mt-4">
+
+                                    <h3> {encuesta.nombre} </h3>
+                                    <p> <strong>{encuesta.descripcion}</strong>  </p>
+
+                                </Col>
+
+                            </Row>
 
 
+                        </Card.Body>
+
+                        <hr />
+
+                        {
+                            encuesta.preguntas.map((p, i) => (
+                                <div key={i}>
+
+                                    {
+                                        i === current && (
+
+                                            <>
 
 
+                                                <Card.Body>
+                                                    <Card.Title>
+                                                        <div> {p.descripcion}  </div>
 
-                                        <Card.Body className=''>
-                                            {/* <Button
-                                            variant="primary"
-                                            className='mx-2'
-                                            onClick={prevPregunta}
-                                        >
-                                            Anterior
-                                        </Button> */}
+                                                    </Card.Title>
+                                                </Card.Body>
 
-                                            <Button
-                                                variant="primary"
-                                                onClick={nextPregunta}
-                                                disabled={activeIndex === null && IstextareaEmpty }
 
-                                            >
-                                                Siguente
-                                            </Button>
+                                                <ListOfOptions
+                                                    opciones={p.opciones}
+                                                    handleOnCLickOpcion={handleOnCLickOpcion}
+                                                    handleOnchange={handleOnchange}
+                                                    handleOnBlur={handleOnBlur}
+                                                    activeIndex={activeIndex}
+                                                    pregunta={pregunta}
+                                                />
 
-                                            {/* {
-                                            current !== length - 1 ?
-
-                                                <Button
-                                                    variant="primary"
-                                                    onClick={nextPregunta}
-                                                    disabled={activeIndex === null}
-                                                >
-                                                    Siguente
-                                                </Button>
-
-                                                :
-
-                                                <Button
-                                                    variant="primary"
-                                                    onClick={sendRespuestas}
-                                                >
-                                                    Enviar respuestas
-                                                </Button>
-
-                                        } */}
-
-                                        </Card.Body>
-                                    </Card>
-                                )
-                            }
-
-                        </div>
+                                            </>
 
 
 
 
+                                        )
+                                    }
 
-                    ))
+                                </div>
+                            ))
+                        }
+
+
+                        <Card.Body className=''>
+
+                            <div className='d-flex'>
+                                <Button
+                                    variant="primary"
+                                    className='me-auto'
+                                    onClick={nextPregunta}
+                                    disabled={activeIndex === null && IstextareaEmpty}
+
+                                >
+                                    Siguente
+                                </Button>
+                                <div >
+                                    <strong>{current + 1} de {length} preguntas</strong>
+                                </div>
+                            </div>
+
+
+                        </Card.Body>
+
+
+
+
+                    </Card>
+
+
+
+
+
+
+
+
+
 
 
 
