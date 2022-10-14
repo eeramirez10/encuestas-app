@@ -8,7 +8,7 @@ import AsignarEncuesta from './AsignarEncuesta';
 
 
 const ListOfEncuestas = ({ encuestas }) => {
-    const [ , setLocation] = useLocation();
+    const [, setLocation] = useLocation();
 
     const [show, setShow] = useState(false);
     const [encuesta, setEncuesta] = useState({})
@@ -17,7 +17,7 @@ const ListOfEncuestas = ({ encuestas }) => {
         setShow(false)
 
     };
-    const handleShow = (encuesta) =>{ 
+    const handleShow = (encuesta) => {
         setShow(true)
         setEncuesta(encuesta)
     };
@@ -31,117 +31,133 @@ const ListOfEncuestas = ({ encuestas }) => {
         <>
 
             {
-                encuestas.map((encuesta) =>
 
-                    <Card
-                        border={'primary'}
-                        key={encuesta._id}
+                !Array.isArray(encuestas) || !encuestas.length ?
 
-                        style={{ width: '20rem' }}
-                        className="mb-2"
-                    >
-                        <Card.Header>{encuesta.nombre} </Card.Header>
-                        <Card.Body>
-                            {/* <Card.Title> {encuesta.nombre} </Card.Title> */}
-                            <Card.Text>
-                                {encuesta.descripcion}
-                            </Card.Text>
+                    <h2> No hay encuestas </h2>
+                    :
+                    encuestas.map((encuesta) =>
 
-                        </Card.Body>
-                        <Card.Body>
+                        <Card
+                            border={'primary'}
+                            key={encuesta._id}
 
-                            {
-                                encuesta.preguntas.length === 0
-                                    ?
+                            style={{ width: '20rem' }}
+                            className="mb-2"
+                        >
+                            <Card.Header>{encuesta.nombre} </Card.Header>
+                            <Card.Body>
+                                {/* <Card.Title> {encuesta.nombre} </Card.Title> */}
+                                <Card.Text>
+                                    {encuesta.descripcion}
+                                </Card.Text>
 
+                            </Card.Body>
+                            <Card.Body>
 
-
-                                    <Button
-                                        variant="warning"
-                                        onClick={() => handleClick(`/encuesta/add/${encuesta._id}`)}
-                                    >
-                                        Agregar preguntas
-                                    </Button>
+                                {
+                                    encuesta.preguntas.length === 0
+                                        ?
 
 
 
-                                    :
-                                    <>
-                                        <ButtonToolbar  aria-label="Toolbar with Button groups">
+                                        <Button
+                                            variant="warning"
+                                            onClick={() => handleClick(`/encuesta/add/${encuesta._id}`)}
+                                        >
+                                            Agregar preguntas
+                                        </Button>
+
+
+
+                                        :
+                                        <>
+                                            <ButtonToolbar aria-label="Toolbar with Button groups">
+                                                <ButtonGroup size="sm" className="mb-2">
+
+                                                    <Button
+                                                        variant="warning"
+                                                        onClick={() => handleClick(`/encuesta/add/${encuesta._id}`)}
+                                                    >
+                                                        Agregar preguntas
+                                                    </Button>
+
+
+                                                    <Button
+                                                        variant="success"
+                                                        onClick={() => handleClick(`/encuesta/start/${encuesta._id}/null`)}
+                                                    >
+                                                        Iniciar Encuesta
+
+                                                    </Button>
+
+
+                                                </ButtonGroup>
+
+                                            </ButtonToolbar>
+
+                                            <ButtonToolbar aria-label="Toolbar with Button groups">
+                                                <ButtonGroup size="sm" className="mb-2">
+                                                    <Button variant="primary" >Editar</Button>
+                                                    <Button variant="danger">Eliminar</Button>
+                                                </ButtonGroup>
+
+                                            </ButtonToolbar>
+
                                             <ButtonGroup size="sm" className="mb-2">
-
-                                                <Button
-                                                    variant="warning"
-                                                    onClick={() => handleClick(`/encuesta/add/${encuesta._id}`)}
-                                                >
-                                                    Agregar preguntas
-                                                </Button>
-
-
                                                 <Button
                                                     variant="success"
-                                                    onClick={() => handleClick(`/encuesta/start/${encuesta._id}/null`)}
+                                                    onClick={() => handleShow(encuesta)}
                                                 >
-                                                    Iniciar Encuesta
+                                                    Asignar Encuesta
 
                                                 </Button>
 
-
                                             </ButtonGroup>
 
-                                        </ButtonToolbar>
-
-                                        <ButtonToolbar aria-label="Toolbar with Button groups">
                                             <ButtonGroup size="sm" className="mb-2">
-                                                <Button variant="primary" >Editar</Button>
-                                                <Button variant="danger">Eliminar</Button>
+                                                <Button
+                                                    variant="success"
+                                                    onClick={ () => handleClick(`/encuesta/resultados/${encuesta._id}`)}
+                                                >
+                                                    Resultados
+
+                                                </Button>
+
                                             </ButtonGroup>
 
-                                        </ButtonToolbar>
 
-                                        <ButtonGroup size="sm" className="mb-2">
-                                            <Button
-                                                variant="success"
-                                                onClick={()=> handleShow(encuesta)}
-                                            >
-                                                Asignar Encuesta
 
-                                            </Button>
-
-                                        </ButtonGroup>
+                                        </>
 
 
 
-                                    </>
+                                }
 
 
 
-                            }
+                            </Card.Body>
+                        </Card>
+
+                    )
 
 
 
-                        </Card.Body>
-                    </Card>
-
-                )
-
-               
-                   
 
             }
 
-            <AsignarEncuesta 
-                show={show} 
-                handleClose={ handleClose} 
-                handleShow ={ handleShow} 
-                encuesta={ encuesta}
+            <AsignarEncuesta
+                show={show}
+                handleClose={handleClose}
+                handleShow={handleShow}
+                encuesta={encuesta}
             />
 
-            
+
 
         </>
 
-       
+
 
 
 

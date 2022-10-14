@@ -9,6 +9,7 @@ import StartEncuesta from './pages/encuestas/StartEncuesta';
 import { useRoute } from "wouter";
 import { Transition } from "react-transition-group";
 import FinishEncuesta from './pages/encuestas/FinishEncuesta';
+import Resultados from './pages/encuestas/Resultados';
 
 function App() {
 
@@ -45,10 +46,11 @@ function App() {
           <Switch>
             {/* <Route path='/' component={Home} /> */}
 
-            <Route path='/' component={Encuestas} />
+            <Route path='/'  component={Encuestas} />
             <Route path='/encuesta/new' component={NewEncuesta} />
             <Route path='/encuesta/add/:idEncuesta' component={AddPreguntas} />
             <Route path='/encuesta/start/:idEncuesta/:idUsuario' component={StartEncuesta} />
+            <Route path='/encuesta/resultados/:idEncuesta' component={ Resultados } />
 
             <Route path="/:rest*">
               {(params) => `404, Sorry the page ${params.rest} does not exist!`}

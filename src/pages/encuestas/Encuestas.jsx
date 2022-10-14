@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import Spinner from 'react-bootstrap/Spinner';
 
 import ListOfEncuestas from '../../components/encuestas/ListOfEncuestas'
 
@@ -6,12 +7,12 @@ import { fetchAPI } from '../../helpers/fetch'
 
 const Encuestas = () => {
 
-    const [encuestas, setEncuestas] = useState([])
-    const [show, setShow] = useState(false);
-
-
+    const [encuestas, setEncuestas] = useState([]);
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
+
+        setIsLoading(true);
 
         fetchAPI({
             endpoint: 'busqueda/coleccion/encuestas/todo',
@@ -20,23 +21,28 @@ const Encuestas = () => {
             .then(async (encuestas) => {
                 const resp = await encuestas.json()
 
+                setIsLoading(false)
+
                 setEncuestas([...resp.data])
             })
 
     }, [setEncuestas])
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    
     return (
 
         <>
 
             {
-                !Array.isArray(encuestas) || !encuestas.length ?
+                isLoading ?
 
-                    <h2> No hay encuestas </h2>
+                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100vh' }}>
+
+                        <Spinner animation="grow"  />
+                        <Spinner animation="grow"  />
+                        <Spinner animation="grow" />
+
+                    </div>
+
 
                     :
 
@@ -44,7 +50,7 @@ const Encuestas = () => {
 
             }
 
-          
+
 
         </>
 
