@@ -4,8 +4,8 @@
 }
 
 .selected {
-    background-color: #1db900;
-    border-left: 4px solid #0f6300;
+    background-color: #6c757d;
+    /* border-left: 4px solid #0f6300; */
     color: #fff;
 }
 

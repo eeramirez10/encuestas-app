@@ -9,6 +9,7 @@ import './StartEncuesta.css'
 import { useLocation } from "wouter";
 import ListOfOptions from '../../components/opciones/ListOfOptions';
 import { alertError, closeLoadingAlert, loadingAlert } from '../../helpers/alerts';
+import HeaderEncuesta from '../../components/encuestas/HeaderEncuesta';
 
 const INITIAL_STATE = {
     descripcion: '',
@@ -259,28 +260,10 @@ const StartEncuesta = ({ params }) => {
 
                     <Card  >
 
-                        <Card.Body  >
-
-                            <Row>
-                                <Col md={6} sm={12} >
-
-                                    <div className="text-center mt-4">
-
-                                        <img
-                                            src="/img/logo-tuvansa.png" alt="..." />
-                                    </div>
-                                </Col>
-                                <Col md={6} sm={12} className="text-center mt-4">
-
-                                    <h3> {encuesta.nombre} </h3>
-                                    <p> <strong>{encuesta.descripcion}</strong>  </p>
-
-                                </Col>
-
-                            </Row>
-
-
-                        </Card.Body>
+                        <HeaderEncuesta 
+                            title={encuesta.nombre} 
+                            descripcion={encuesta.descripcion} 
+                        />
 
                         <hr />
 
@@ -293,10 +276,9 @@ const StartEncuesta = ({ params }) => {
 
                                             <>
 
-
-                                                <Card.Body>
-                                                    <Card.Title>
-                                                        <div> {p.descripcion}  </div>
+                                                <Card.Body style={{ paddingBottom:'px', paddingTop:'0px' }}>
+                                                    <Card.Title >
+                                                        {p.descripcion}  
 
                                                     </Card.Title>
                                                 </Card.Body>
@@ -312,9 +294,6 @@ const StartEncuesta = ({ params }) => {
                                                 />
 
                                             </>
-
-
-
 
                                         )
                                     }
