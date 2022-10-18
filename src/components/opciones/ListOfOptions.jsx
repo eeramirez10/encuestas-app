@@ -1,36 +1,29 @@
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { Form } from 'react-bootstrap';
 
 
-const ListOfOptions = ({ opciones, handleOnCLickOpcion, activeIndex, handleOnchange, pregunta, handleOnBlur }) => {
 
+const ListOfOptions = ({ 
+    opciones, 
+    handleOnCLickOpcion,
+    activeIndex, 
+    handleOnchange, 
+    pregunta, 
+    handleOnBlur 
+}) => {
 
     return (
 
-
-
-
         <ListGroup variant='flush' className='opciones'>
             {
-                opciones.map((opcion, index) => (
+                opciones.map((opcion, index) => {
 
-                    < div key={opcion._id}>
+                    
+
+                   return < div key={opcion._id}>
                         {
+                            
 
-                            opcion.type === "textarea" ?
-
-                                <Form.Control
-                                    as="textarea"
-                                    rows={3}
-                                    placeholder="Escriba su respuesta"
-                                    name="descripcion"
-                                    value={pregunta.opcion.descripcion}
-                                    onChange={(e) => handleOnchange(e)}
-                                    onBlur={ handleOnBlur}
-                                />
-
-                                :
 
 
                                 <ListGroup.Item
@@ -47,7 +40,7 @@ const ListOfOptions = ({ opciones, handleOnCLickOpcion, activeIndex, handleOncha
                     </div>
 
 
-                ))
+                })
             }
 
 

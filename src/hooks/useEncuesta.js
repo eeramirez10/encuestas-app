@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { fetchAPI } from '../helpers/fetch';
 import { alertError, closeLoadingAlert, loadingAlert } from '../helpers/alerts';
 import { useLocation } from "wouter";
@@ -13,6 +13,7 @@ const INITIAL_STATE = {
     preguntas: [
         {
             descripcion: '',
+            type: '',
             opciones: []
         }
     ]
@@ -21,6 +22,7 @@ const INITIAL_STATE = {
 
 const pregunta_initial_state = {
     _id: '',
+    type: "",
     opcion: {
         descripcion: '',
         type: ""
@@ -29,7 +31,8 @@ const pregunta_initial_state = {
 
 export const useEncuesta = ({ params }) => {
 
-    const { idEncuesta, idUsuario} = params
+    const { idEncuesta, idUsuario } = params
+
 
     const [, setLocation] = useLocation();
 
@@ -64,7 +67,7 @@ export const useEncuesta = ({ params }) => {
                 setLength(resp.data.preguntas.length)
             })
 
-        if (idUsuario !== 'null' || !idUsuario) {
+        if (idUsuario) {
 
             fetchAPI({
                 endpoint: `usuarios/${idUsuario}`,
@@ -84,10 +87,10 @@ export const useEncuesta = ({ params }) => {
     }, [setEncuesta, idEncuesta, idUsuario])
 
 
-    // const prevPregunta = () => {
+    const prevPregunta = () => {
 
-    //     setCurrent(current === 0 ? length - 1 : current - 1)
-    // }
+        setCurrent(current === 0 ? length - 1 : current - 1)
+    }
 
     const nextPregunta = () => {
 
@@ -111,9 +114,9 @@ export const useEncuesta = ({ params }) => {
 
         option.valor = 1
 
-        const idPregunta = encuesta.preguntas[current]._id;
+        const Pregunta = encuesta.preguntas[current];
 
-        setPregunta({ _id: idPregunta, opcion: option });
+        setPregunta({ ...Pregunta, opcion: option });
 
 
         setActiveIndex(index)
@@ -129,11 +132,12 @@ export const useEncuesta = ({ params }) => {
         setIsTextareaEmpty(!e.target.value)
 
         setPregunta({
-            _id: Pregunta._id,
+            ...Pregunta,
             opcion: {
                 ...Pregunta.opciones[0],
                 [e.target.name]: e.target.value,
-                type: "textarea"
+                type: "textarea",
+                valor: 1
             }
         })
 
@@ -152,22 +156,26 @@ export const useEncuesta = ({ params }) => {
 
         loadingAlert({})
 
+        try {
 
-        const body = await fetchAPI({ endpoint: 'encuesta/submit', method: 'POST', data: { idUsuario: currentUser._id, idEncuesta, preguntas } })
 
-        const resp = await body.json();
+            const body = await fetchAPI({ endpoint: 'encuesta/submit', method: 'POST', data: { idUsuario: currentUser._id, idEncuesta, preguntas } })
 
-        if (!resp.ok) {
+            const resp = await body.json();
 
-            return alertError()
-        }
+            if (!resp.ok) {
 
-        if (resp.ok) {
+                return alertError()
+            }
 
             closeLoadingAlert()
 
             return setLocation('/encuesta/finish')
+
+        } catch (error) {
+            return alertError({text:"Hubo un error"})
         }
+
 
     }
 
@@ -186,6 +194,7 @@ export const useEncuesta = ({ params }) => {
 
     return {
         nextPregunta,
+        prevPregunta,
         fechaContestada,
         isEncuestaContestada,
         sendRespuestas,

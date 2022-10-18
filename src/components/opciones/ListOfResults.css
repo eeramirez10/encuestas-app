@@ -1,0 +1,10 @@
+.progress {
+    --bs-progress-height : 2rem
+}
+
+.bg-orange {
+    
+    --bs-bg-opacity: 1;
+    background-color: rgba(255,96,0,1)!important;
+
+}

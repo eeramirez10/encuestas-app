@@ -4,6 +4,7 @@ import './StartEncuesta.css'
 import ListOfOptions from '../../components/opciones/ListOfOptions';
 import HeaderEncuesta from '../../components/encuestas/HeaderEncuesta';
 import { useEncuesta } from '../../hooks/useEncuesta';
+import { Form } from 'react-bootstrap';
 
 
 const StartEncuesta = ({ params }) => {
@@ -22,7 +23,7 @@ const StartEncuesta = ({ params }) => {
         activeIndex,
         pregunta,
         IstextareaEmpty
-    } = useEncuesta({ params})
+    } = useEncuesta({ params })
 
 
 
@@ -86,38 +87,61 @@ const StartEncuesta = ({ params }) => {
 
                     <Card  >
 
-                        <HeaderEncuesta 
-                            title={encuesta.nombre} 
-                            descripcion={encuesta.descripcion} 
+                        <HeaderEncuesta
+                            title={encuesta.nombre}
+                            descripcion={encuesta.descripcion}
                         />
 
                         <hr />
 
                         {
-                            encuesta.preguntas.map((p, i) => (
-                                <div key={i}>
+                            encuesta.preguntas.map((p, i) => {
+
+                                return <div key={i}>
 
                                     {
                                         i === current && (
 
                                             <>
 
-                                                <Card.Body style={{ paddingBottom:'px', paddingTop:'0px' }}>
+                                                <Card.Body style={{ paddingBottom: 'px', paddingTop: '0px' }}>
                                                     <Card.Title >
-                                                        {p.descripcion}  
+                                                        {p.descripcion}
 
                                                     </Card.Title>
                                                 </Card.Body>
 
+                                                {
 
-                                                <ListOfOptions
-                                                    opciones={p.opciones}
-                                                    handleOnCLickOpcion={handleOnCLickOpcion}
-                                                    handleOnchange={handleOnchange}
-                                                    handleOnBlur={handleOnBlur}
-                                                    activeIndex={activeIndex}
-                                                    pregunta={pregunta}
-                                                />
+                                                    p.type === "comentario"  ?
+
+
+                                                        <Form.Control
+                                                            as="textarea"
+                                                            rows={3}
+                                                            placeholder="Escriba su respuesta"
+                                                            name="descripcion"
+                                                            value={pregunta.opcion.descripcion}
+                                                            onChange={(e) => handleOnchange(e)}
+                                                           
+
+
+                                                        />
+                                                        :
+
+                                                        <ListOfOptions
+                                                            opciones={p.opciones}
+                                                            handleOnCLickOpcion={handleOnCLickOpcion}
+                                                            handleOnchange={handleOnchange}
+                                                            handleOnBlur={handleOnBlur}
+                                                            activeIndex={activeIndex}
+                                                            pregunta={pregunta}
+                                                        />
+                                                }
+
+
+
+
 
                                             </>
 
@@ -125,7 +149,7 @@ const StartEncuesta = ({ params }) => {
                                     }
 
                                 </div>
-                            ))
+                            })
                         }
 
 

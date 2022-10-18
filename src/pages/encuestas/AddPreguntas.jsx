@@ -1,6 +1,5 @@
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useEffect,  useState } from 'react'
 import { fetchAPI } from '../../helpers/fetch';
-import { formReducer } from '../../reducers/formReducer';
 import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import FormPregunta from '../../components/forms/FormPregunta';
@@ -34,7 +33,7 @@ const AddPreguntas = ({ params }) => {
                 setEncuesta({ ...resp.data })
             })
 
-    }, [setEncuesta]);
+    }, [setEncuesta, idEncuesta]);
 
     const handleOnChange = (e, indexPregunta, indexOpcion, propiedad) => {
 
@@ -74,7 +73,7 @@ const AddPreguntas = ({ params }) => {
     }
 
     const handleAdd = () => {
-        setInputPreguntas([...inputPreguntas, { descripcion: '', opciones: [{ descripcion: '', type:'text' }] }]);
+        setInputPreguntas([...inputPreguntas, { descripcion: '',type:"multiOpcion", opciones: [{ descripcion: '', type:'text' }] }]);
     };
 
     const handleAddOpcion = (IndexP,indiceOpcion, type) => {
@@ -86,6 +85,7 @@ const AddPreguntas = ({ params }) => {
         if(type === "textarea"){
 
             list[IndexP].opciones.splice(0,indiceOpcion + 1)
+            list[IndexP].type = "comentario"
         }
 
         if(type === "text"){
@@ -94,9 +94,11 @@ const AddPreguntas = ({ params }) => {
                 list[IndexP].opciones.splice(0,indiceOpcion + 1)
             }
 
+            list[IndexP].type = "multiOpcioi"
+
         }
 
-        console.log(type)
+        
 
         list[IndexP].opciones.push({ descripcion: '', type })
 
