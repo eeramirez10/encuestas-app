@@ -13,7 +13,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 code {
@@ -97,11 +97,7 @@ form[action$="destroy"] button {
   border-width: 0;
 }
 
-/* #root {
-  display: flex;
-  height: 100%;
-  width: 100%;
-} */
+
 
 .pointer{
   cursor: pointer;
@@ -245,7 +241,7 @@ i {
 
 #detail {
   flex: 1;
-  padding: 2rem 4rem;
+  padding: 1rem 1rem;
   width: 100%;
 }
 
