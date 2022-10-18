@@ -76,17 +76,26 @@ const MultiOpciones = ({ opciones, popover, handleOnClickPop }) => {
 
     const colorVariant = (porcentaje) => {
 
+        const number = parseInt(porcentaje)
+        
+        return number < 30 ? 'danger' : 
+            number >= 30 && number < 50 
+            ? "warning":
+            number >= 50 && number < 75 ? "info" :
+            "success"
 
-        switch (true) {
-            case porcentaje < 30:
-                return "danger"
-            case porcentaje > 30 && porcentaje < 50:
-                return "warning"
-            case porcentaje > 50 && porcentaje < 75:
-                return "info"
-            default:
-                return "succes"
-        }
+        // switch (true) {
+        //     case number < 30:
+        //         return "danger"
+        //     case number > 30 && number < 50:
+        //         return "warning"
+        //     case number > 50 && number < 75:
+        //         return "danger"
+        //     case number > 75:
+        //         return "succes"
+        //     default:
+        //         return "success"
+        // }
     }
 
     const porcentajeTotal = (votos) => {
@@ -137,8 +146,9 @@ const MultiOpciones = ({ opciones, popover, handleOnClickPop }) => {
 
                             <Col md={12} className="mt-1">
 
-                                <OverlayTrigger placement="bottom" overlay={popover} onEntered={() => handleOnClickPop(opcion)} >
+                                <OverlayTrigger placement="top" overlay={popover} onEntered={() => handleOnClickPop(opcion)} >
 
+       
 
                                     <ProgressBar
                                         variant={
@@ -179,9 +189,9 @@ const MultiOpciones = ({ opciones, popover, handleOnClickPop }) => {
 }
 
 
-const Comentarios = ({opciones, handleOnClickPop, popover }) => {
+const Comentarios = ({ opciones, handleOnClickPop, popover }) => {
 
-  return  <ListGroup variant='flush' className='opciones'>
+    return <ListGroup variant='flush' className='opciones'>
 
         {
             opciones.map((opcion, index) => (
