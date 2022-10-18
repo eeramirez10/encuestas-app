@@ -52,7 +52,7 @@ const SideBar = () => {
         <>
 
 
-            <Navbar key={expand} bg="dark" variant='dark' expand={expand} className="mb-3 " onToggle={handleShow} >
+            <Navbar key={expand} bg="dark" variant='dark' expand={expand} className="mb-3 " onToggle={handleShow} fixed="top" >
                 <Container fluid>
                     <Navbar.Brand className='pointer' onClick={() => handleClick('/')}  >
                         Encuestas
