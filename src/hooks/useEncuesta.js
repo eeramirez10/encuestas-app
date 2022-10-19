@@ -98,7 +98,7 @@ export const useEncuesta = ({ params }) => {
 
         setPregunta(pregunta_initial_state)
 
-        setCurrent(current === length ? 0 : current + 1);
+        setCurrent(current === length - 1 ? 0 : current + 1);
 
         setActiveIndex(null)
 

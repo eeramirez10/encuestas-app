@@ -37,8 +37,8 @@ const Encuestas = () => {
 
                     <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100vh' }}>
 
-                        <Spinner animation="grow"  />
-                        <Spinner animation="grow"  />
+                        <Spinner size='sm' animation="grow"  />
+                        <Spinner size='sm' animation="grow"  />
                         <Spinner animation="grow" />
 
                     </div>

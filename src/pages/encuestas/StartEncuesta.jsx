@@ -5,6 +5,9 @@ import ListOfOptions from '../../components/opciones/ListOfOptions';
 import HeaderEncuesta from '../../components/encuestas/HeaderEncuesta';
 import { useEncuesta } from '../../hooks/useEncuesta';
 import { Form } from 'react-bootstrap';
+import Swal from 'sweetalert2';
+import { useEffect } from 'react';
+
 
 
 const StartEncuesta = ({ params }) => {
@@ -24,6 +27,53 @@ const StartEncuesta = ({ params }) => {
         pregunta,
         IstextareaEmpty
     } = useEncuesta({ params })
+
+    useEffect(() => {
+
+        if (!isEncuestaContestada()) {
+            Swal.fire({
+                title: '<strong>Informacion</strong>',
+                icon: 'info',
+                html: `
+                    <p>
+                        Lea con atencion las preguntas y respuestas, 
+                        al dar siguiente imposibilitara regresar a la pregunta anterior.
+                    </p>
+         
+                    <p>
+                        El Objetivo de esta encuesta es encontrar areas de mejora en el funcionamiento de Tuvansa y en la satisfaccion de los profesionales que la componen.
+                    </p>
+    
+                    <p>
+                    <strong><u>Sus respuestas son absolutamente confidenciales y serán enviadas directamente a la Dirección General de TUVANSA</u></strong>
+                    </p>
+                    <p>
+                        Se le pide contestar honestamente
+                    </p>
+                  
+                    
+    
+    
+                `,
+
+                focusConfirm: true,
+                confirmButtonText:
+                    '<i class="fa fa-thumbs-up"></i> Entiendo!',
+                confirmButtonAriaLabel: 'Thumbs up, great!',
+                cancelButtonText:
+                    '<i class="fa fa-thumbs-down"></i>',
+                cancelButtonAriaLabel: 'Thumbs down',
+                allowOutsideClick: false
+            })
+
+
+        }
+
+
+
+
+
+    }, [])
 
 
 
@@ -49,9 +99,6 @@ const StartEncuesta = ({ params }) => {
     return (
 
         <>
-
-
-
 
 
             {
@@ -92,7 +139,10 @@ const StartEncuesta = ({ params }) => {
                             descripcion={encuesta.descripcion}
                         />
 
+
+
                         <hr />
+
 
                         {
                             encuesta.preguntas.map((p, i) => {
@@ -113,7 +163,7 @@ const StartEncuesta = ({ params }) => {
 
                                                 {
 
-                                                    p.type === "comentario"  ?
+                                                    p.type === "comentario" ?
 
 
                                                         <Form.Control
@@ -123,7 +173,7 @@ const StartEncuesta = ({ params }) => {
                                                             name="descripcion"
                                                             value={pregunta.opcion.descripcion}
                                                             onChange={(e) => handleOnchange(e)}
-                                                           
+
 
 
                                                         />
@@ -197,6 +247,28 @@ const StartEncuesta = ({ params }) => {
 
 
     )
+}
+
+
+const MensajeInicio = () => {
+
+    return Swal.fire({
+        title: '<strong>HTML <u>example</u></strong>',
+        icon: 'info',
+        html:
+            'You can use <b>bold text</b>, ' +
+            '<a href="//sweetalert2.github.io">links</a> ' +
+            'and other HTML tags',
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText:
+            '<i class="fa fa-thumbs-up"></i> Great!',
+        confirmButtonAriaLabel: 'Thumbs up, great!',
+        cancelButtonText:
+            '<i class="fa fa-thumbs-down"></i>',
+        cancelButtonAriaLabel: 'Thumbs down'
+    })
 }
 
 export default StartEncuesta

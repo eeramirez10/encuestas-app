@@ -16,8 +16,6 @@ const ListOfResults = ({ opciones, isComentario = false }) => {
 
     const [usuarios, setUsuarios] = useState([]);
 
-    console.log(isComentario)
-
 
     const popover = (
         <Popover id="popover-basic">
@@ -42,6 +40,10 @@ const ListOfResults = ({ opciones, isComentario = false }) => {
         setUsuarios(usuarios)
     }
 
+    const handleOnExit = () =>{
+        setUsuarios([])
+    }
+
 
 
 
@@ -53,11 +55,11 @@ const ListOfResults = ({ opciones, isComentario = false }) => {
             {
                 isComentario ?
 
-                    <Comentarios opciones={opciones} popover={popover} handleOnClickPop={handleOnClickPop} />
+                    <Comentarios opciones={opciones} popover={popover} handleOnClickPop={handleOnClickPop} handleOnExit={handleOnExit} />
 
                     :
 
-                    <MultiOpciones opciones={opciones} popover={popover} handleOnClickPop={handleOnClickPop} />
+                    <MultiOpciones opciones={opciones} popover={popover} handleOnClickPop={handleOnClickPop} handleOnExit={handleOnExit} />
 
             }
 
@@ -71,7 +73,7 @@ const ListOfResults = ({ opciones, isComentario = false }) => {
 }
 
 
-const MultiOpciones = ({ opciones, popover, handleOnClickPop }) => {
+const MultiOpciones = ({ opciones, popover, handleOnClickPop, handleOnExit }) => {
 
 
     const colorVariant = (porcentaje) => {
@@ -146,7 +148,7 @@ const MultiOpciones = ({ opciones, popover, handleOnClickPop }) => {
 
                             <Col md={12} className="mt-1">
 
-                                <OverlayTrigger placement="top" overlay={popover} onEntered={() => handleOnClickPop(opcion)} >
+                                <OverlayTrigger placement="top" overlay={popover} onEntered={() => handleOnClickPop(opcion)} onExit={handleOnExit} >
 
        
 
@@ -189,7 +191,7 @@ const MultiOpciones = ({ opciones, popover, handleOnClickPop }) => {
 }
 
 
-const Comentarios = ({ opciones, handleOnClickPop, popover }) => {
+const Comentarios = ({ opciones, handleOnClickPop, popover, handleOnExit }) => {
 
     return <ListGroup variant='flush' className='opciones'>
 
@@ -203,7 +205,7 @@ const Comentarios = ({ opciones, handleOnClickPop, popover }) => {
                         key={opcion._id}
 
                     >
-                        <Row>  <OverlayTrigger placement="bottom" overlay={popover} onEntered={() => handleOnClickPop(opcion)} >
+                        <Row>  <OverlayTrigger placement="top" overlay={popover} onEntered={() => handleOnClickPop(opcion)} handleOnExit={handleOnExit} >
 
                             <Col md={12} className=" d-flex ">
 

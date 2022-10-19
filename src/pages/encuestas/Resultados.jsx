@@ -11,8 +11,6 @@ const Resultados = ({ params }) => {
     const { encuesta, current, nextPregunta, prevPregunta, length, } = useEncuesta({ params })
 
 
-    console.log(encuesta)
-
     return (
         <Card style={{ width:'100%' }} >
 
@@ -28,7 +26,7 @@ const Resultados = ({ params }) => {
                     <div key={i}>
 
                         {
-                            i === current && (
+                            i === current  && (
 
                                 <>
 
@@ -40,8 +38,6 @@ const Resultados = ({ params }) => {
                                     </Card.Body>
 
                                     
-
-
                                     <ListOfResults
                                         opciones={p.opciones}
                                         isComentario = {  p.type === "comentario" }
@@ -62,12 +58,13 @@ const Resultados = ({ params }) => {
 
                 <div className='d-flex'>
             
-                    <div className='me-auto'>
+                    <div className='me-auto d-flex '>
 
                         <Button
                             variant="primary"
-                            className='me-auto'
+                            className='mx-1'
                             onClick={prevPregunta}
+                            size ="sm"
                         >
                             Anterior
                         </Button>
@@ -76,7 +73,7 @@ const Resultados = ({ params }) => {
                             variant="primary"
                             
                             onClick={nextPregunta}
-
+                            size ="sm"
                         >
                             Siguente
                         </Button>

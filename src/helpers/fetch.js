@@ -1,6 +1,6 @@
 export const fetchAPI = ({endpoint, data, method, signal }) => {
 
-    const url = `https://encuestas-back-end.herokuapp.com/api/${endpoint}`;
+    const url = `http://encuestas-back-end.herokuapp.com/api/${endpoint}`;
 
     if (method === 'GET') {
         return fetch(url)

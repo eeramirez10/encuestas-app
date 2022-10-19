@@ -12,9 +12,7 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
     const [usuarios, setUsuarios] = useState([]);
 
     const [isLoading, setIsLoading] = useState(false)
-    const [current, setCurrent] = useState(null);
-
-     const [location, setLocation] = useLocation()
+ 
 
     useEffect(() => {
 
@@ -42,7 +40,7 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
     const handleAsignar = async (usuario, i) => {
 
         setIsLoading(true)
-        setCurrent(i)
+   
 
         const asignar = await fetchAPI({
             endpoint: 'encuesta/asignar',
@@ -58,11 +56,7 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
 
 
         setIsLoading(false)
-        setCurrent(null)
 
-
-
-        console.log(resp)
 
         fetchAPI({
             endpoint: 'usuarios',
@@ -80,7 +74,7 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
 
     const isEncuestaAsignada = (usuario) => {
 
-        return usuario.encuestas.some(en => en.encuesta === encuesta._id)
+        return usuario.encuestas.some(en => en.encuesta === encuesta._id);
 
     }
 
@@ -121,6 +115,7 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
                 keyboard={false}
                 size="xl"
                 centered
+                
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Asignar Encuesta</Modal.Title>
@@ -130,7 +125,7 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
                     
 
 
-                    <Table striped bordered hover>
+                    <Table striped bordered hover size='sm' responsive>
                         <thead>
                             <tr>
                                 <th>#</th>
