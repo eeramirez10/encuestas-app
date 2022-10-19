@@ -30,7 +30,7 @@ const StartEncuesta = ({ params }) => {
 
     useEffect(() => {
 
-        console.log(isEncuestaContestada())
+   
 
         if (!isEncuestaContestada()) {
             Swal.fire({
@@ -96,7 +96,7 @@ const StartEncuesta = ({ params }) => {
     }
 
     
-    console.log({current, length})
+  
 
 
 

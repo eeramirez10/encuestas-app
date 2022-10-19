@@ -80,7 +80,7 @@ const AddPreguntas = ({ params }) => {
 
         let list = [...inputPreguntas]
 
-        console.log(indiceOpcion)
+     
 
         if(type === "textarea"){
 

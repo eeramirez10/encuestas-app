@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 
 import ListOfEncuestas from '../../components/encuestas/ListOfEncuestas'
+import { alertError } from '../../helpers/alerts';
 
 import { fetchAPI } from '../../helpers/fetch'
 
@@ -24,6 +25,9 @@ const Encuestas = () => {
                 setIsLoading(false)
 
                 setEncuestas([...resp.data])
+            }).catch( () =>{
+                setIsLoading(false)
+                alertError({text:"hubo un error, hablar con el admin"})
             })
 
     }, [setEncuestas])

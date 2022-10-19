@@ -6,13 +6,14 @@ import Table from 'react-bootstrap/Table';
 import { useLocation } from 'wouter';
 import { alertError, alertSuccess, closeLoadingAlert, loadingAlert } from '../../helpers/alerts';
 import { fetchAPI } from '../../helpers/fetch';
+import copy from 'copy-to-clipboard';
 
 const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
 
     const [usuarios, setUsuarios] = useState([]);
 
     const [isLoading, setIsLoading] = useState(false)
- 
+
 
     useEffect(() => {
 
@@ -40,7 +41,7 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
     const handleAsignar = async (usuario, i) => {
 
         setIsLoading(true)
-   
+
 
         const asignar = await fetchAPI({
             endpoint: 'encuesta/asignar',
@@ -74,39 +75,71 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
 
     const isEncuestaAsignada = (usuario) => {
 
-        return usuario.encuestas.some(en => en.encuesta === encuesta._id);
+        return (
 
+            usuario.encuestas.length ?
+                usuario.encuestas?.some(en => en.encuesta === encuesta._id) : false
+        )
+
+    }
+
+    const isEncuestaContestada = (usuario) => {
+        return (
+            usuario.encuestas.length ?
+                usuario.encuestas?.find(en => en.encuesta === encuesta._id)?.contestada ? "Si" : "No" : ""
+        )
+
+    }
+
+    const generaLink = (usuario) => {
+
+        return `https://encuestas-app-6ec15.web.app/encuesta/start/${encuesta._id}/${usuario._id}`
     }
 
     const enviarEncuesta = async (usuario) => {
 
-        loadingAlert({ html:'Enviando correo.....' })
+        loadingAlert({ html: 'Enviando correo.....' })
 
 
         const enviarCorreo = await fetchAPI({
             endpoint: 'encuesta/enviar',
             method: 'POST',
             data: {
-                encuesta:encuesta,
+                encuesta: encuesta,
                 usuario: usuario
             }
         })
 
         const resp = await enviarCorreo.json();
 
-        if( !resp.ok){
+        if (!resp.ok) {
             closeLoadingAlert();
-            alertError({ text: resp.msg});
+            alertError({ text: resp.msg });
         }
 
-        alertSuccess({title:"correo enviado correctamente"})
+        alertSuccess({ title: "correo enviado correctamente" })
 
     }
 
+    const handleCopiar = (usuario) => {
+
+        let datos = `
+            nombre: ${usuario.nombre}
+            email: ${usuario.email}
+            link: https://encuestas-app-6ec15.web.app/encuesta/start/${encuesta._id}/${usuario._id}
+            encuesta: ${encuesta.nombre}
+        `
+
+        copy( datos )
+
+        alertSuccess({ title: "Copiado " })
+    }
+
+    
 
     return (
         <>
-    
+
 
             <Modal
                 show={show}
@@ -115,14 +148,14 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
                 keyboard={false}
                 size="xl"
                 centered
-                
+
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Asignar Encuesta</Modal.Title>
+                    <Modal.Title>Asignar Encuesta {encuesta.nombre}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
 
-                    
+
 
 
                     <Table striped bordered hover size='sm' responsive>
@@ -131,6 +164,11 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
                                 <th>#</th>
                                 <th>Nombre</th>
                                 <th>email</th>
+                                <th>area</th>
+                                <th>sucursal</th>
+                                <th>contestada</th>
+                                <th> link </th>
+                                <th>Accion</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -143,21 +181,58 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
                                         <td>{i + 1}</td>
                                         <td>{usuario.nombre} </td>
                                         <td>{usuario.email}</td>
+                                        <td>{usuario.area}</td>
+                                        <td>{usuario.sucursal}</td>
+
+
+                                        <td> {isEncuestaContestada(usuario)} </td>
 
                                         {
 
                                             isEncuestaAsignada(usuario) ?
 
-                                                <td>
-                                                    <Button
-                                                        variant="success"
-                                                        size='sm'
+                                                <td> Si </td>
 
-                                                        onClick={() => enviarEncuesta(usuario)}
-                                                    >
-                                                        enviar email
-                                                    </Button>
-                                                </td>
+                                                :
+                                                <td> Falta asignar </td>
+
+
+                                        }
+
+
+
+                                        {
+
+                                            isEncuestaAsignada(usuario) ?
+
+                                                <>
+                                                    <td>
+                                                        <Button
+                                                            variant="success"
+                                                            size='sm'
+                                                            className='mx-1'
+                                                            onClick={() => enviarEncuesta(usuario)}
+                                                        >
+                                                            enviar
+                                                        </Button>
+                                                        <Button
+                                                            variant="info"
+                                                            size='sm'
+
+                                                            onClick={() => handleCopiar(usuario)}
+                                                        >
+                                                            copiar
+                                                        </Button>
+
+                                                    </td>
+
+
+
+                                                </>
+
+
+
+
 
                                                 :
 
@@ -190,9 +265,7 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
+
                 </Modal.Footer>
             </Modal>
         </>

@@ -16,6 +16,8 @@ function App() {
   const [match] = useRoute('/encuesta/start/:idEncuesta/:idUsuario');
   const [finish] = useRoute('/encuesta/finish');
 
+
+
   if (match || finish) {
     return (
       <Router>
@@ -39,12 +41,13 @@ function App() {
       <Router>
 
 
-        <SideBar />
+      <SideBar />
 
         <div id="detail">
 
           <Switch>
             {/* <Route path='/' component={Home} /> */}
+            
 
             <Route path='/'  component={Encuestas} />
             <Route path='/encuesta/new' component={NewEncuesta} />
