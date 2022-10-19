@@ -64,7 +64,7 @@ export const useEncuesta = ({ params }) => {
                 const resp = await encuestas.json()
 
                 isMounted && setEncuesta(resp.data);
-                setLength(resp.data.preguntas.length)
+                setLength(resp.data.preguntas.length )
             })
 
         if (idUsuario) {
@@ -89,7 +89,7 @@ export const useEncuesta = ({ params }) => {
 
     const prevPregunta = () => {
 
-        setCurrent(current === 0 ? length - 1 : current - 1)
+        setCurrent(current === 0 ? length  : current - 1)
     }
 
     const nextPregunta = () => {
@@ -98,7 +98,7 @@ export const useEncuesta = ({ params }) => {
 
         setPregunta(pregunta_initial_state)
 
-        setCurrent(current === length - 1 ? 0 : current + 1);
+        setCurrent(current === length  ? 0 : current + 1);
 
         setActiveIndex(null)
 
