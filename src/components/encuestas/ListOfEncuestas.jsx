@@ -83,11 +83,19 @@ const ListOfEncuestas = ({ encuestas }) => {
                                                     </Button>
 
 
-                                                    <Button
+                                                    {/* <Button
                                                         variant="success"
                                                         onClick={() => handleClick(`/encuesta/start/${encuesta._id}/null`)}
                                                     >
                                                         Iniciar Encuesta
+
+                                                    </Button> */}
+
+                                                    <Button
+                                                        variant="success"
+                                                        onClick={() => handleClick(`/encuesta/${encuesta._id}`)}
+                                                    >
+                                                        Ver Encuesta
 
                                                     </Button>
 

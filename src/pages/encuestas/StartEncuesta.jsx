@@ -12,6 +12,8 @@ import { useEffect } from 'react';
 
 const StartEncuesta = ({ params }) => {
 
+    const { idEncuesta, idUsuario } = params;
+
     const {
         nextPregunta,
         fechaContestada,
@@ -26,7 +28,7 @@ const StartEncuesta = ({ params }) => {
         activeIndex,
         pregunta,
         IstextareaEmpty
-    } = useEncuesta({ params })
+    } = useEncuesta({ idEncuesta, idUsuario })
 
     useEffect(() => {
 

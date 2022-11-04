@@ -35,6 +35,8 @@ const AddPreguntas = ({ params }) => {
 
     }, [setEncuesta, idEncuesta]);
 
+
+
     const handleOnChange = (e, indexPregunta, indexOpcion, propiedad) => {
 
         const { name, value } = e.target;
@@ -80,7 +82,6 @@ const AddPreguntas = ({ params }) => {
 
         let list = [...inputPreguntas]
 
-     
 
         if(type === "textarea"){
 

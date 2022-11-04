@@ -40,7 +40,8 @@ const ListOfResults = ({ opciones, isComentario = false }) => {
         setUsuarios(usuarios)
     }
 
-    const handleOnExit = () =>{
+    const handleOnExit = () => {
+        
         setUsuarios([])
     }
 
@@ -55,11 +56,21 @@ const ListOfResults = ({ opciones, isComentario = false }) => {
             {
                 isComentario ?
 
-                    <Comentarios opciones={opciones} popover={popover} handleOnClickPop={handleOnClickPop} handleOnExit={handleOnExit} />
+                    <Comentarios
+                        opciones={opciones}
+                        popover={popover}
+                        handleOnClickPop={handleOnClickPop}
+                        handleOnExit={handleOnExit}
+                    />
 
                     :
 
-                    <MultiOpciones opciones={opciones} popover={popover} handleOnClickPop={handleOnClickPop} handleOnExit={handleOnExit} />
+                    <MultiOpciones
+                        opciones={opciones}
+                        popover={popover}
+                        handleOnClickPop={handleOnClickPop}
+                        handleOnExit={handleOnExit}
+                    />
 
             }
 
@@ -79,12 +90,12 @@ const MultiOpciones = ({ opciones, popover, handleOnClickPop, handleOnExit }) =>
     const colorVariant = (porcentaje) => {
 
         const number = parseInt(porcentaje)
-        
-        return number < 30 ? 'danger' : 
-            number >= 30 && number < 50 
-            ? "warning":
-            number >= 50 && number < 75 ? "info" :
-            "success"
+
+        return number < 30 ? 'danger' :
+            number >= 30 && number < 50
+                ? "warning" :
+                number >= 50 && number < 75 ? "info" :
+                    "success"
 
         // switch (true) {
         //     case number < 30:
@@ -150,7 +161,7 @@ const MultiOpciones = ({ opciones, popover, handleOnClickPop, handleOnExit }) =>
 
                                 <OverlayTrigger placement="top" overlay={popover} onEntered={() => handleOnClickPop(opcion)} onExit={handleOnExit} >
 
-       
+
 
                                     <ProgressBar
                                         variant={
@@ -205,18 +216,23 @@ const Comentarios = ({ opciones, handleOnClickPop, popover, handleOnExit }) => {
                         key={opcion._id}
 
                     >
-                        <Row>  <OverlayTrigger placement="top" overlay={popover} onEntered={() => handleOnClickPop(opcion)} handleOnExit={handleOnExit} >
+                        <Row>
+                            <OverlayTrigger placement="top" overlay={popover} onEntered={() => handleOnClickPop(opcion)} onExit={handleOnExit} >
 
-                            <Col md={12} className=" d-flex ">
+                                <Col md={12} >
+
+                        
+                                    <div >
+                                        <p>
+
+                                            {opcion.descripcion}
+                                        </p>
+
+                                    </div>
 
 
-                                <div className='me-auto'>
-                                    {opcion.descripcion}
-                                </div>
-
-
-                            </Col>
-                        </OverlayTrigger>
+                                </Col>
+                            </OverlayTrigger>
 
 
 

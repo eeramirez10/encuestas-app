@@ -10,6 +10,8 @@ import { useRoute } from "wouter";
 import { Transition } from "react-transition-group";
 import FinishEncuesta from './pages/encuestas/FinishEncuesta';
 import Resultados from './pages/encuestas/Resultados';
+import Usuarios  from './pages/usuarios/Usuarios';
+import VerEncuesta from './pages/encuestas/VerEncuesta';
 
 function App() {
 
@@ -53,7 +55,9 @@ function App() {
             <Route path='/encuesta/new' component={NewEncuesta} />
             <Route path='/encuesta/add/:idEncuesta' component={AddPreguntas} />
             <Route path='/encuesta/start/:idEncuesta/:idUsuario' component={StartEncuesta} />
+            <Route path='/encuesta/:idEncuesta' component={ VerEncuesta }  />
             <Route path='/encuesta/resultados/:idEncuesta' component={ Resultados } />
+            <Route path='/usuarios' component={ Usuarios } />
 
             <Route path="/:rest*">
               {(params) => `404, Sorry the page ${params.rest} does not exist!`}

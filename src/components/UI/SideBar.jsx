@@ -16,9 +16,9 @@ const SideBar = () => {
 
     const [, setLocation] = useLocation();
 
-    const { height, width } =  useWindowDimensions()
+    const { height, width } = useWindowDimensions()
 
-   
+
 
     const [show, setShow] = useState(false);
     const [expand, setExpand] = useState(true);
@@ -26,19 +26,19 @@ const SideBar = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
- 
 
-    useEffect(() =>{
 
-        if(width <= 780){
+    useEffect(() => {
+
+        if (width <= 780) {
 
             setExpand(false)
-        }else{
+        } else {
 
             setExpand(true)
         }
 
-    },[setExpand, width])
+    }, [setExpand, width])
 
 
     const handleClick = (path) => {
@@ -68,7 +68,7 @@ const SideBar = () => {
                     >
 
 
-                        <Offcanvas.Header  closeButton  >
+                        <Offcanvas.Header closeButton  >
                             <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
                                 Rutas
                             </Offcanvas.Title>
@@ -79,7 +79,7 @@ const SideBar = () => {
                                     onClick={handleClose}
                                     as={Link}
                                     to="/"
-                                    
+
                                 >
                                     Encuestas
                                 </Nav.Link>
@@ -89,6 +89,13 @@ const SideBar = () => {
                                     to="/encuesta/new"
                                 >
                                     Nueva Encuesta
+                                </Nav.Link>
+                                <Nav.Link
+                                    onClick={handleClose}
+                                    as={Link}
+                                    to="/usuarios"
+                                >
+                                    Usuarios
                                 </Nav.Link>
                                 {/* <NavDropdown
                                     title="Dropdown"

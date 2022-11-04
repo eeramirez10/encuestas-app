@@ -6,9 +6,9 @@ import { useEncuesta } from '../../hooks/useEncuesta';
 
 const Resultados = ({ params }) => {
 
+    const { idEncuesta, idUsuario } = params;
 
-
-    const { encuesta, current, nextPregunta, prevPregunta, length, } = useEncuesta({ params })
+    const { encuesta, current, nextPregunta, prevPregunta, length, } = useEncuesta({ idEncuesta, idUsuario })
 
 
     return (

@@ -29,11 +29,11 @@ const pregunta_initial_state = {
     }
 }
 
-export const useEncuesta = ({ params }) => {
+export const useEncuesta = ({ idEncuesta, idUsuario }) => {
 
-    const { idEncuesta, idUsuario } = params
-
-
+    
+    // console.log({ idEncuesta, idUsuario })
+    
     const [, setLocation] = useLocation();
 
     const [current, setCurrent] = useState(0);
@@ -67,7 +67,7 @@ export const useEncuesta = ({ params }) => {
                 setLength(resp.data.preguntas.length )
             })
 
-        if (idUsuario) {
+        if (!idUsuario === "null" || idUsuario ) {
 
             fetchAPI({
                 endpoint: `usuarios/${idUsuario}`,
@@ -75,7 +75,7 @@ export const useEncuesta = ({ params }) => {
             })
                 .then(async (usuario) => {
                     const resp = await usuario.json()
-                    setCurrentUser(resp.usuario)
+                    setCurrentUser(resp.usuario.docs)
                 })
         }
 

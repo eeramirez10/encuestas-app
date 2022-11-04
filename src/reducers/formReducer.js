@@ -8,6 +8,7 @@ export const INITIAL_STATE = {
 };
 
 export const formReducer = (state, action) => {
+
     switch(action.type){
         case "CHANGE_INPUT":
             return{
@@ -18,6 +19,12 @@ export const formReducer = (state, action) => {
                 }
                 
             };
+        case "CLEANUP":
+            return {
+                ...state,
+                values:action.payload.values,
+                validated:false
+            }
         case "CHANGE_VALIDATED":
             return{
                 ...state,
