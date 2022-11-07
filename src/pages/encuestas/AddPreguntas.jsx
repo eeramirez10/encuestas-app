@@ -1,4 +1,4 @@
-import React, { useEffect,  useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { fetchAPI } from '../../helpers/fetch';
 import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -8,102 +8,145 @@ import FormOpciones from '../../components/forms/FormOpciones';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import { alertConfirm, alertSuccess } from '../../helpers/alerts';
+import { useLocation } from 'wouter';
+import AsignarEstructura from '../../components/opciones/AsignarEstructura';
 
 
 const AddPreguntas = ({ params }) => {
-    const { idEncuesta } = params
+
+    const { idEncuesta } = params;
+
+
+
+
+    const [, setLocation] = useLocation();
 
     const [encuesta, setEncuesta] = useState({});
 
     const [validated, setValidated] = useState(false);
 
-    const [inputPreguntas, setInputPreguntas] = useState([{
+
+    const [inputPreguntas, setInputPreguntas] = useState({
         descripcion: '',
+        type: "",
         opciones: [
-            { descripcion: '', type:'text' }
+            { descripcion: '', type: 'text' }
         ]
-    }])
+    })
+
+    const [numeroPregunta, setNumeroPregunta] = useState(0);
+
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
+
+        if (localStorage.getItem('estructuraOpciones')) {
+
+            const structOptionsParse = JSON.parse(localStorage.getItem("estructuraOpciones"));
+
+            const filterEncuesta = structOptionsParse.filter(op => op.id === idEncuesta)
+
+            if (filterEncuesta.length) {
+                setInputPreguntas(pregunta => ({
+                    ...pregunta,
+                    opciones: filterEncuesta[0].opciones
+                }))
+            }
+
+
+
+        }
+
 
         fetchAPI({ endpoint: `encuesta/${idEncuesta}`, method: 'GET' })
             .then(async (encuesta) => {
                 const resp = await encuesta.json();
 
                 setEncuesta({ ...resp.data })
+
+
+
+                setNumeroPregunta(resp.data.preguntas.length)
             })
 
     }, [setEncuesta, idEncuesta]);
 
 
 
-    const handleOnChange = (e, indexPregunta, indexOpcion, propiedad) => {
+    const handleClose = () => {
+        setShow(false)
+
+    };
+    const handleShow = () => {
+        setShow(true)
+
+    };
+
+
+    const handleOnChange = (e, indexOpcion, propiedad) => {
 
         const { name, value } = e.target;
 
-        const list = [...inputPreguntas];
+        const pregunta = { ...inputPreguntas };
 
 
         if (propiedad === 'opciones') {
 
-            list[indexPregunta][propiedad][indexOpcion][name] = value
+            pregunta[propiedad][indexOpcion][name] = value
 
 
-            setInputPreguntas(list);
+            setInputPreguntas(pregunta);
 
             return
         }
 
-        list[indexPregunta][name] = value;
-        setInputPreguntas(list);
+        pregunta[name] = value;
+        setInputPreguntas(pregunta);
 
     }
 
-    const handleRemove = (indexPregunta, indexOpcion, propiedad) => {
-        const list = [...inputPreguntas];
+    const handleRemove = (indexOpcion, propiedad) => {
+        const pregunta = { ...inputPreguntas };
         if (propiedad === 'opciones') {
 
-            list[indexPregunta][propiedad].splice(indexOpcion, 1);
+            pregunta[propiedad].splice(indexOpcion, 1);
 
 
-            setInputPreguntas(list)
+            setInputPreguntas(pregunta)
 
             return
         }
-        list.splice(indexPregunta, 1);
-        setInputPreguntas(list)
+        // list.splice(indexPregunta, 1);
+        // setInputPreguntas(list)
     }
 
-    const handleAdd = () => {
-        setInputPreguntas([...inputPreguntas, { descripcion: '',type:"multiOpcion", opciones: [{ descripcion: '', type:'text' }] }]);
-    };
+    const handleAddOpcion = (indiceOpcion, type) => {
 
-    const handleAddOpcion = (IndexP,indiceOpcion, type) => {
-
-        let list = [...inputPreguntas]
+        let pregunta = { ...inputPreguntas };
 
 
-        if(type === "textarea"){
+        if (type === "textarea") {
 
-            list[IndexP].opciones.splice(0,indiceOpcion + 1)
-            list[IndexP].type = "comentario"
+            pregunta.opciones.splice(0, indiceOpcion + 1)
+            pregunta.type = "comentario"
         }
 
-        if(type === "text"){
+        if (type === "text") {
 
-            if( list[IndexP].opciones[0].type === "textarea"){
-                list[IndexP].opciones.splice(0,indiceOpcion + 1)
+            if (pregunta.opciones[0].type === "textarea") {
+                pregunta.opciones.splice(0, indiceOpcion + 1)
             }
 
-            list[IndexP].type = "multiOpcioi"
+            pregunta.type = "multiOpcion"
 
         }
 
-        
 
-        list[IndexP].opciones.push({ descripcion: '', type })
 
-        setInputPreguntas(list)
+        pregunta.opciones.push({ descripcion: '', type })
+
+        setInputPreguntas(pregunta)
     }
 
 
@@ -122,42 +165,58 @@ const AddPreguntas = ({ params }) => {
 
         if (!formIsValid) return
 
-        console.log(inputPreguntas)
-
-        for (let pregunta of inputPreguntas) {
-
-
-            console.log({
-                descripcion: pregunta.descripcion,
-                opciones: pregunta.opciones,
+        const preguntas = await fetchAPI({
+            endpoint: 'preguntas', data: {
+                descripcion: inputPreguntas.descripcion,
+                opciones: inputPreguntas.opciones,
                 idEncuesta
-            })
+            }, method: 'POST'
+        })
 
-            const preguntas = await fetchAPI({
-                endpoint: 'preguntas', data: {
-                    descripcion: pregunta.descripcion,
-                    opciones: pregunta.opciones,
-                    idEncuesta
-                }, method: 'POST'
-            })
+        const resp = await preguntas.json();
 
-            const resp = await preguntas.json();
+        if (resp.ok) {
 
-            console.log(resp)
+            await alertSuccess({ title: "Guardado correctamente" })
+
+            const result = await alertConfirm()
+
+            if (result.isConfirmed) {
+
+                setNumeroPregunta(prev => prev + 1)
+                setValidated(false)
+
+
+                if (localStorage.getItem('estructuraOpciones')) {
+
+                    const structOptionsParse = JSON.parse(localStorage.getItem("estructuraOpciones"));
+
+                    const filterEncuesta = structOptionsParse.filter(op => op.id === idEncuesta)
+
+                    if(filterEncuesta.length){
+                        return setInputPreguntas({
+                            descripcion: '',
+                            opciones: filterEncuesta[0].opciones
+                        })
+                    }
+
+
+                }
+
+                return setInputPreguntas({
+                    descripcion: '',
+                    opciones: [
+                        { descripcion: '', type: 'text' }
+                    ]
+                })
+            }
+
+            setLocation('/');
+
+
 
         }
 
-
-        //    const pregunta = await  fetchAPI({ endpoint:'preguntas', data:{ descriocion:'' }, method:'POST' })
-
-
-        // fetchAPI({
-        //     endpoint:'encuesta',
-        //     method:'POST',
-        //     data: state.values
-        // })
-        // .then( () =>{}  )
-        // .catch(console.log)
     }
 
 
@@ -166,87 +225,86 @@ const AddPreguntas = ({ params }) => {
 
         <>
 
-            <h2>{encuesta?.nombre} </h2>
+            <div className='d-flex my-3'>
+                <h2 className="me-auto" >{encuesta?.nombre} </h2>
+                <Button onClick={() => handleShow()} > Asignar estructura  </Button>
+            </div>
+
+
 
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
 
-                {
-                    inputPreguntas.map((pregunta, indicePregunta) => {
+                <Card>
 
-                        return <Card
-                            key={indicePregunta}
-                        >
+                    <Card.Body>
 
-                            <Card.Body>
+                        <FormPregunta
+                            i={numeroPregunta}
+                            value={inputPreguntas.descripcion}
+                            name="descripcion"
+                            handleOnChange={handleOnChange}
+                        />
 
-                                <FormPregunta
-                                    i={indicePregunta}
-                                    value={pregunta.descripcion}
-                                    name="descripcion"
-                                    handleOnChange={handleOnChange}
-                                />
+                        {
+                            inputPreguntas.opciones.map((opcion, i) => {
 
-                                {
-                                    pregunta.opciones.map((opcion, i) => {
+                                return (
+                                    <div
+                                        key={i}
+                                        className='mx-5 mb-2'>
+                                        <FormOpciones
 
-                                        return (
-                                            <div
-                                                key={i}
-                                                className='mx-5 mb-2'>
-                                                <FormOpciones
+                                            i={i}
+                                            value={opcion.descripcion}
+                                            name='descripcion'
+                                            handleOnChange={handleOnChange}
+                                            type={opcion.type}
+                                        />
 
-                                                    i={i}
-                                                    indicePregunta={indicePregunta}
-                                                    value={opcion.descripcion}
-                                                    name='descripcion'
-                                                    handleOnChange={handleOnChange}
-                                                    type={opcion.type}
-                                                />
+                                        {
 
-                                                {
-
-                                                    inputPreguntas[indicePregunta].opciones.length !== 1 &&
+                                            inputPreguntas.opciones.length !== 1 &&
 
 
-                                                    <Button
-                                                        variant="danger"
-                                                        className="mx-2"
-                                                        onClick={() => handleRemove(indicePregunta, i, 'opciones')}
+                                            <Button
+                                                variant="danger"
+                                                className="mx-2"
+                                                onClick={() => handleRemove(i, 'opciones')}
+
+                                            >
+                                                Eliminar
+                                            </Button>
+
+                                        }
+
+                                        {
+
+                                            inputPreguntas.opciones.length - 1 === i &&
+
+                                            <>
+
+                                                <ButtonGroup>
+
+                                                    <DropdownButton
+                                                        variant='success'
+                                                        as={ButtonGroup}
+                                                        title="Agregar"
 
                                                     >
-                                                        Eliminar
-                                                    </Button>
+                                                        <Dropdown.Item
+                                                            onClick={() => handleAddOpcion(i, 'text')}
+                                                        >
+                                                            Input
+                                                        </Dropdown.Item>
 
-                                                }
+                                                        <Dropdown.Item
+                                                            onClick={() => handleAddOpcion(i, 'textarea')}
+                                                        >
+                                                            TextArea
+                                                        </Dropdown.Item>
+                                                    </DropdownButton>
 
-                                                {
-
-                                                    inputPreguntas[indicePregunta].opciones.length - 1 === i &&
-
-                                                    <>
-
-                                                        <ButtonGroup>
-
-                                                            <DropdownButton
-                                                                variant='success'
-                                                                as={ButtonGroup}
-                                                                title="Agregar"
-
-                                                            >
-                                                                <Dropdown.Item
-                                                                    onClick={() => handleAddOpcion(indicePregunta,i, 'text')}
-                                                                >
-                                                                    Input
-                                                                </Dropdown.Item>
-
-                                                                <Dropdown.Item
-                                                                    onClick={() => handleAddOpcion(indicePregunta,i, 'textarea')}
-                                                                >
-                                                                    TextArea
-                                                                </Dropdown.Item>
-                                                            </DropdownButton>
-
-                                                            {/* <Button
+                                                    {/* <Button
                                                                 variant="success"
                                                                 onClick={() => handleAddOpcion(indicePregunta)}
 
@@ -254,27 +312,27 @@ const AddPreguntas = ({ params }) => {
                                                                 Agregar
                                                             </Button> */}
 
-                                                        </ButtonGroup>
+                                                </ButtonGroup>
 
 
-                                                    </>
-
-
-
-                                                }
+                                            </>
 
 
 
-                                            </div>
-                                        )
-
-
-                                    })
-                                }
+                                        }
 
 
 
-                                {
+                                    </div>
+                                )
+
+
+                            })
+                        }
+
+
+
+                        {/* {
                                     inputPreguntas.length !== 1 &&
 
                                     <Button
@@ -285,9 +343,9 @@ const AddPreguntas = ({ params }) => {
                                         Eliminar
                                     </Button>
 
-                                }
+                                } */}
 
-                                {
+                        {/* {
                                     inputPreguntas.length - 1 === indicePregunta &&
 
 
@@ -297,40 +355,28 @@ const AddPreguntas = ({ params }) => {
                                     >
                                         Agregar
                                     </Button>
-                                }
+                                } */}
 
 
 
-                            </Card.Body>
+                    </Card.Body>
 
 
 
 
-                        </Card>
-
-                    })
-                }
-
-
-
-                {/* <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Descripcion</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={state.values.descripcion}
-                        name="descripcion"
-                        onChange={handleOnChange}
-                        required
-                    />
-                    <Form.Control.Feedback type='invalid'>
-                        Por favor ingresa la descripcion de la encuesta
-                    </Form.Control.Feedback>
-                </Form.Group> */}
+                </Card>
 
                 <Button variant="primary" type='submit' className='mt-5'  >
                     Submit
                 </Button>
             </Form>
+
+            <AsignarEstructura
+                show={show}
+                handleClose={handleClose}
+                idEncuesta={idEncuesta}
+                setInputPreguntas={setInputPreguntas}
+            />
 
         </>
 

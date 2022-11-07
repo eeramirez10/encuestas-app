@@ -47,7 +47,20 @@ export const alertSuccess = ({
         icon: 'success',
         title,
         showConfirmButton: false,
-        timer: 1500
+        timer: 500
       })
+
+}
+
+
+export const alertConfirm = () => {
+
+    return Swal.fire({
+        title: 'Desea agregar otra pregunta?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Si',
+        denyButtonText: `No`,
+    })
 
 }

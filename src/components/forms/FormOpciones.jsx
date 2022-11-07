@@ -4,7 +4,6 @@ import { Form } from 'react-bootstrap';
 
 const FormOpciones = ({
     i,
-    indicePregunta,
     value,
     name,
     handleOnChange,
@@ -28,7 +27,7 @@ const FormOpciones = ({
                             type="text"
                             value={value}
                             name={name}
-                            onChange={(e) => handleOnChange(e, indicePregunta, i, 'opciones')}
+                            onChange={(e) => handleOnChange(e, i, 'opciones')}
                             size="sm"
 
 

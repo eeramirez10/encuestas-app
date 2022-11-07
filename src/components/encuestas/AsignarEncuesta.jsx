@@ -28,7 +28,7 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
                 .then(async (usuarios) => {
                     const resp = await usuarios.json();
 
-                    setUsuarios(resp.usuarios)
+                    setUsuarios(resp.usuarios.docs)
                     setIsLoading(false)
 
                 })
@@ -261,6 +261,7 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
                         </tbody>
                     </Table>
                 </Modal.Body>
+                
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
