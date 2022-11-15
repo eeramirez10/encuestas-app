@@ -78,7 +78,7 @@ const ListOfEncuestas = ({ encuestas }) => {
                                         <Dropdown.Item onClick={() => handleClick(`/encuesta/${encuesta._id}`)} >Ver</Dropdown.Item>
 
                                         <Dropdown.Divider />
-                                        <Dropdown.Item >Editar</Dropdown.Item>
+                                    <Dropdown.Item onClick={()=> handleClick(`/encuesta/edit/${encuesta._id}`) } >Editar</Dropdown.Item>
                                         <Dropdown.Item >Eliminar</Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>

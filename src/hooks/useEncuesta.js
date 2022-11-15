@@ -32,7 +32,7 @@ const pregunta_initial_state = {
 export const useEncuesta = ({ idEncuesta, idUsuario }) => {
 
     
-    // console.log({ idEncuesta, idUsuario })
+    console.log({ idEncuesta, idUsuario })
     
     const [, setLocation] = useLocation();
 

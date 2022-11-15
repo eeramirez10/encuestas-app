@@ -1,31 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import { fetchAPI } from '../../helpers/fetch';
-import { Form } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import FormPregunta from '../../components/forms/FormPregunta';
-import Card from 'react-bootstrap/Card';
+import { Button, ButtonGroup, Card, Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import FormOpciones from '../../components/forms/FormOpciones';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { alertConfirm, alertSuccess } from '../../helpers/alerts';
-import { useLocation } from 'wouter';
-import AsignarEstructura from '../../components/opciones/AsignarEstructura';
+import FormPregunta from '../../components/forms/FormPregunta';
+import { alertError, alertSuccess } from '../../helpers/alerts';
+import { fetchAPI } from '../../helpers/fetch';
 
 
-const AddPreguntas = ({ params }) => {
-
+const EditarEncuesta = ({ params }) => {
     const { idEncuesta } = params;
 
-
-
-
-    const [, setLocation] = useLocation();
-
-    const [encuesta, setEncuesta] = useState({});
-
     const [validated, setValidated] = useState(false);
+    const [encuesta, setEncuesta] = useState({
+        _id: "",
+        descripcion: "",
+        nombre: "",
+        preguntas: [{
+            descripcion: "",
+            opciones: [{
+                descripcion: "",
+                type: ""
+            }]
+        }],
 
+    });
+
+    const [current, setCurrent] = useState(0);
 
     const [inputPreguntas, setInputPreguntas] = useState({
         descripcion: '',
@@ -33,14 +32,10 @@ const AddPreguntas = ({ params }) => {
         opciones: [
             { descripcion: '', type: 'text' }
         ]
-    })
+    });
 
-    const [numeroPregunta, setNumeroPregunta] = useState(0);
-
-    const [show, setShow] = useState(false);
 
     useEffect(() => {
-
 
         fetchAPI({ endpoint: `encuesta/${idEncuesta}`, method: 'GET' })
             .then(async (encuesta) => {
@@ -48,45 +43,17 @@ const AddPreguntas = ({ params }) => {
 
                 setEncuesta({ ...resp.data })
 
+                setInputPreguntas(resp.data.preguntas[0])
 
-
-                setNumeroPregunta(resp.data.preguntas.length)
             })
 
     }, [idEncuesta]);
 
     useEffect(() => {
+        console.log(current)
+        setInputPreguntas(encuesta.preguntas[current])
 
-        if (localStorage.getItem('estructuraOpciones')) {
-
-            const structOptionsParse = JSON.parse(localStorage.getItem("estructuraOpciones"));
-
-            const filterEncuesta = structOptionsParse.filter(op => op.id === idEncuesta)
-
-            if (filterEncuesta.length) {
-                setInputPreguntas(pregunta => ({
-                    ...pregunta,
-                    opciones: filterEncuesta[0].opciones
-                }))
-            }
-
-
-
-        }
-
-    },[idEncuesta])
-
-
-
-    const handleClose = () => {
-        setShow(false)
-
-    };
-    const handleShow = () => {
-        setShow(true)
-
-    };
-
+    }, [current])
 
     const handleOnChange = (e, indexOpcion, propiedad) => {
 
@@ -94,15 +61,11 @@ const AddPreguntas = ({ params }) => {
 
         const pregunta = { ...inputPreguntas };
 
-
         if (propiedad === 'opciones') {
 
             pregunta[propiedad][indexOpcion][name] = value
 
-
-            setInputPreguntas(pregunta);
-
-            return
+            return setInputPreguntas(pregunta);
         }
 
         pregunta[name] = value;
@@ -115,7 +78,6 @@ const AddPreguntas = ({ params }) => {
         if (propiedad === 'opciones') {
 
             pregunta[propiedad].splice(indexOpcion, 1);
-
 
             setInputPreguntas(pregunta)
 
@@ -146,12 +108,21 @@ const AddPreguntas = ({ params }) => {
 
         }
 
-
-
         pregunta.opciones.push({ descripcion: '', type })
 
         setInputPreguntas(pregunta)
     }
+
+    const handleNext = () => {
+
+        setCurrent(current => current === encuesta.preguntas.length - 1 ? 0 : current + 1)
+
+    }
+
+    const handlePrev = () => {
+        setCurrent(current => current === 0 ? encuesta.preguntas.length - 1 : current - 1)
+    }
+
 
 
     const handleSubmit = async (event) => {
@@ -169,90 +140,52 @@ const AddPreguntas = ({ params }) => {
 
         if (!formIsValid) return
 
-        const preguntas = await fetchAPI({
-            endpoint: 'preguntas', data: {
-                descripcion: inputPreguntas.descripcion,
-                opciones: inputPreguntas.opciones,
-                idEncuesta
-            }, method: 'POST'
-        })
 
-        const resp = await preguntas.json();
-
-        if (resp.ok) {
-
-            await alertSuccess({ title: "Guardado correctamente" })
-
-            const result = await alertConfirm()
-
-            if (result.isConfirmed) {
-
-                setNumeroPregunta(prev => prev + 1)
-                setValidated(false)
+        try {
 
 
-                if (localStorage.getItem('estructuraOpciones')) {
+            const resp = await fetchAPI({ endpoint: 'preguntas', method: 'PUT', data: inputPreguntas });
 
-                    const structOptionsParse = JSON.parse(localStorage.getItem("estructuraOpciones"));
+            const body = await resp.json()
 
-                    const filterEncuesta = structOptionsParse.filter(op => op.id === idEncuesta)
+            if(!body.ok) return alertError({text:"hubo un error"});
 
-                    if (filterEncuesta.length) {
-                        return setInputPreguntas({
-                            descripcion: '',
-                            opciones: filterEncuesta[0].opciones
-                        })
-                    }
+            alertSuccess({title:"Actualizado correctamente"})
 
+        } catch (error) {
 
-                }
+            console.log(error);
 
-                return setInputPreguntas({
-                    descripcion: '',
-                    opciones: [
-                        { descripcion: '', type: 'text' }
-                    ]
-                })
-            }
-
-            setLocation('/');
-
-
+            alertError({ text:"hubo un error"})
 
         }
+
 
     }
 
 
-
     return (
-
         <>
-
             <div className='d-flex my-3'>
-                <h2 className="me-auto" >{encuesta?.nombre} </h2>
-                <Button onClick={() => handleShow()} > Asignar estructura  </Button>
+                <h2 className="me-auto" >EDITAR Encuesta {encuesta?.nombre} </h2>
+
+                <strong>{current + 1} de {encuesta.preguntas.length} preguntas</strong>
+
             </div>
 
-
-
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                <div>
+                    <Card>
+                        <Card.Body>
+                            <FormPregunta
+                                i={current}
+                                value={inputPreguntas.descripcion}
+                                name="descripcion"
+                                handleOnChange={handleOnChange}
+                            />
 
-                <Card>
-
-                    <Card.Body>
-
-                        <FormPregunta
-                            i={numeroPregunta}
-                            value={inputPreguntas.descripcion}
-                            name="descripcion"
-                            handleOnChange={handleOnChange}
-                        />
-
-                        {
-                            inputPreguntas.opciones.map((opcion, i) => {
-
-                                return (
+                            {
+                                inputPreguntas.opciones.map((opcion, i) =>
                                     <div
                                         key={i}
                                         className='mx-5 mb-2'>
@@ -308,13 +241,6 @@ const AddPreguntas = ({ params }) => {
                                                         </Dropdown.Item>
                                                     </DropdownButton>
 
-                                                    {/* <Button
-                                                                variant="success"
-                                                                onClick={() => handleAddOpcion(indicePregunta)}
-
-                                                            >
-                                                                Agregar
-                                                            </Button> */}
 
                                                 </ButtonGroup>
 
@@ -324,67 +250,64 @@ const AddPreguntas = ({ params }) => {
 
 
                                         }
-
-
-
                                     </div>
+
                                 )
+                            }
 
 
-                            })
-                        }
+                        </Card.Body>
+                        <Card.Body>
 
+                            <div className='d-flex'>
 
+                                <div className='me-auto d-flex '>
 
-                        {/* {
-                                    inputPreguntas.length !== 1 &&
-
-                                    <Button
-                                        variant="danger"
-                                        className="mx-2"
-                                        onClick={() => handleRemove(indicePregunta)}
-                                    >
-                                        Eliminar
+                                    <Button variant="warning" type='submit'   >
+                                        Guardar
                                     </Button>
 
-                                } */}
-
-                        {/* {
-                                    inputPreguntas.length - 1 === indicePregunta &&
-
+                                </div>
+                                <div >
 
                                     <Button
-                                        variant="success"
-                                        onClick={handleAdd}
+                                        variant="primary"
+                                        className='mx-1'
+                                        onClick={handlePrev}
+                                        size="sm"
                                     >
-                                        Agregar
+                                        Anterior
                                     </Button>
-                                } */}
+
+                                    <Button
+                                        variant="primary"
+                                        onClick={handleNext}
+                                        size="sm"
+                                    >
+                                        Siguente
+                                    </Button>
+                                </div>
+                            </div>
+
+                        </Card.Body>
+
+
+                    </Card>
 
 
 
-                    </Card.Body>
+                </div>
 
 
 
 
-                </Card>
-
-                <Button variant="primary" type='submit' className='mt-5'  >
-                    Submit
-                </Button>
             </Form>
 
-            <AsignarEstructura
-                show={show}
-                handleClose={handleClose}
-                idEncuesta={idEncuesta}
-                setInputPreguntas={setInputPreguntas}
-            />
+
+
 
         </>
-
     )
 }
 
-export default AddPreguntas
+export default EditarEncuesta

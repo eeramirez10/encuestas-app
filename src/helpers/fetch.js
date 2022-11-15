@@ -1,6 +1,6 @@
 export const fetchAPI = ({endpoint, data, method, signal }) => {
 
-    const url = `http://localhost:3000/api/${endpoint}`;
+    const url = `http://localhost:3009/api/${endpoint}`;
 
     // console.log(url)
 

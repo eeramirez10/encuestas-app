@@ -98,7 +98,6 @@ const VerEncuesta = ({ params }) => {
                             className='me-auto'
                             onClick={nextPregunta}
                           
-
                         >
                             Siguente
                         </Button>
