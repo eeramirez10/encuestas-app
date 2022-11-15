@@ -9,7 +9,7 @@ import StartEncuesta from './pages/encuestas/StartEncuesta';
 import { useRoute } from "wouter";
 import FinishEncuesta from './pages/encuestas/FinishEncuesta';
 import Resultados from './pages/encuestas/Resultados';
-import Usuarios  from './pages/usuarios/Usuarios';
+import Usuarios from './pages/usuarios/Usuarios';
 import VerEncuesta from './pages/encuestas/VerEncuesta';
 import EditarEncuesta from './pages/encuestas/EditarEncuesta';
 
@@ -25,14 +25,17 @@ function App() {
       <Router>
         <div id="detail">
           <Route path='/encuesta/start/:idEncuesta/:idUsuario' component={StartEncuesta} />
-          <Route path='/encuesta/finish' component={ FinishEncuesta } />
-     
+          <Route path='/encuesta/finish' component={FinishEncuesta} />
+
         </div>
       </Router>
 
     )
 
   }
+
+
+
 
 
   return (
@@ -43,22 +46,22 @@ function App() {
       <Router>
 
 
-      <SideBar />
+        {/* <SideBar /> */}
 
         <div id="detail">
 
           <Switch>
             {/* <Route path='/' component={Home} /> */}
-            
 
-            <Route path='/'  component={Encuestas} />
+
+            <Route path='/amkshy' component={Encuestas} />
             <Route path='/encuesta/new' component={NewEncuesta} />
             <Route path='/encuesta/add/:idEncuesta' component={AddPreguntas} />
             <Route path='/encuesta/start/:idEncuesta/:idUsuario' component={StartEncuesta} />
-            <Route path='/encuesta/:idEncuesta' component={ VerEncuesta }  />
-            <Route path='/encuesta/resultados/:idEncuesta' component={ Resultados } />
-            <Route path='/encuesta/edit/:idEncuesta' component={  EditarEncuesta } />
-            <Route path='/usuarios' component={ Usuarios } />
+            <Route path='/encuesta/:idEncuesta' component={VerEncuesta} />
+            <Route path='/encuesta/resultados/:idEncuesta' component={Resultados} />
+            <Route path='/encuesta/edit/:idEncuesta' component={EditarEncuesta} />
+            <Route path='/usuarios' component={Usuarios} />
 
             <Route path="/:rest*">
               {(params) => `404, Sorry the page ${params.rest} does not exist!`}

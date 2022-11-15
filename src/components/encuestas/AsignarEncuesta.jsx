@@ -66,7 +66,7 @@ const AsignarEncuesta = ({ show, handleClose, encuesta }) => {
             .then(async (usuarios) => {
                 const resp = await usuarios.json();
 
-                setUsuarios(resp.usuarios)
+                setUsuarios(resp.usuarios.docs)
 
 
             })
