@@ -75,7 +75,9 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
             })
                 .then(async (usuario) => {
                     const resp = await usuario.json()
-                    setCurrentUser(resp.usuario.docs)
+
+                    console.log(resp)
+                    setCurrentUser(resp.usuario)
                 })
         }
 
@@ -183,6 +185,8 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
 
 
     const isEncuestaContestada = () => {
+
+        console.log(currentUser)
 
         return currentUser.encuestas?.some(encuesta => encuesta.contestada === true)
     }

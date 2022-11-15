@@ -1,6 +1,6 @@
 export const fetchAPI = ({endpoint, data, method, signal }) => {
 
-    const url = `http://localhost:3009/api/${endpoint}`;
+    const url = `https://encuestas-back-end.herokuapp.com/api/${endpoint}`;
 
     // console.log(url)
 
