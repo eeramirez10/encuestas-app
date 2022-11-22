@@ -86,7 +86,7 @@ const SideBar = () => {
                                 <Nav.Link
                                     onClick={handleClose}
                                     as={Link}
-                                    to="/encuesta/new"
+                                    to="/encuesta/new/add"
                                 >
                                     Nueva Encuesta
                                 </Nav.Link>

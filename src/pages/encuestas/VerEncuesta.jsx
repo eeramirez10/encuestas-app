@@ -9,9 +9,11 @@ import { Form } from 'react-bootstrap';
 
 const VerEncuesta = ({ params }) => {
 
+
+
     const { idEncuesta } = params;
 
-    const { encuesta, current, nextPregunta, pregunta, handleOnchange, handleOnCLickOpcion, handleOnBlur, activeIndex,length  } = useEncuesta({ idEncuesta, idUsuario: null });
+    const { encuesta, current, nextPregunta, pregunta, handleOnchange, handleOnCLickOpcion, handleOnBlur, activeIndex, length, prevPregunta } = useEncuesta({ idEncuesta, idUsuario: null });
 
 
 
@@ -96,8 +98,16 @@ const VerEncuesta = ({ params }) => {
                         <Button
                             variant="primary"
                             className='me-auto'
+                            onClick={prevPregunta}
+
+                        >
+                            Anterior
+                        </Button>
+                        <Button
+                            variant="primary"
+                            className='me-auto'
                             onClick={nextPregunta}
-                          
+
                         >
                             Siguente
                         </Button>

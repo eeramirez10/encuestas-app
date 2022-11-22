@@ -7,9 +7,6 @@ const ListOfOptions = ({
     opciones, 
     handleOnCLickOpcion,
     activeIndex, 
-    handleOnchange, 
-    pregunta, 
-    handleOnBlur 
 }) => {
 
     return (

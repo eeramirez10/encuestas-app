@@ -22,8 +22,6 @@ const Usuarios = () => {
             .then(async (resp) => {
                 const body = await resp.json();
 
-                console.log(body)
-
                 if (!body.ok) return console.log('Hubo un error')
 
                 setUsuarios(body.usuarios.docs)
@@ -63,7 +61,7 @@ const Usuarios = () => {
 
                     <TableUsers usuarios={usuarios} />
 
-                    <Paginacion />
+              
 
                 </Card.Body>
 

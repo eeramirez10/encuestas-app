@@ -1,0 +1,219 @@
+[debug] [2022-11-15T20:44:44.236Z] ----------------------------------------------------------------------
+[debug] [2022-11-15T20:44:44.236Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2022-11-15T20:44:44.237Z] CLI Version:   11.16.0
+[debug] [2022-11-15T20:44:44.237Z] Platform:      darwin
+[debug] [2022-11-15T20:44:44.237Z] Node Version:  v16.10.0
+[debug] [2022-11-15T20:44:44.237Z] Time:          Tue Nov 15 2022 14:44:44 GMT-0600 (hora estándar central)
+[debug] [2022-11-15T20:44:44.237Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-11-15T20:44:44.266Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-11-15T20:44:44.267Z] > authorizing via signed-in user (erick.vane.yerik@gmail.com)
+[debug] [2022-11-15T20:44:44.267Z] [iam] checking project encuestas-app-6ec15 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-11-15T20:44:44.268Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/encuestas-app-6ec15:testIamPermissions [none]
+[debug] [2022-11-15T20:44:44.268Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/encuestas-app-6ec15:testIamPermissions x-goog-quota-user=projects/encuestas-app-6ec15
+[debug] [2022-11-15T20:44:44.268Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/encuestas-app-6ec15:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-11-15T20:44:44.707Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/encuestas-app-6ec15:testIamPermissions 200
+[debug] [2022-11-15T20:44:44.708Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/encuestas-app-6ec15:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-11-15T20:44:44.709Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/encuestas-app-6ec15 [none]
+[debug] [2022-11-15T20:44:44.978Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/encuestas-app-6ec15 200
+[debug] [2022-11-15T20:44:44.978Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/encuestas-app-6ec15 {"projectId":"encuestas-app-6ec15","projectNumber":"255258810705","displayName":"encuestas-app","name":"projects/encuestas-app-6ec15","resources":{"hostingSite":"encuestas-app-6ec15"},"state":"ACTIVE","etag":"1_4d89827e-9f35-45ab-94aa-e3c2d5d0e0ce"}
+[info] 
+[info] === Deploying to 'encuestas-app-6ec15'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2022-11-15T20:44:44.985Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/versions [none]
+[debug] [2022-11-15T20:44:44.985Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2022-11-15T20:44:45.800Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/versions 200
+[debug] [2022-11-15T20:44:45.801Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/versions {"name":"projects/255258810705/sites/encuestas-app-6ec15/versions/9ab0044016d750e7","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[encuestas-app-6ec15]: beginning deploy... 
+[info] i  hosting[encuestas-app-6ec15]: found 16 files in build 
+[debug] [2022-11-15T20:44:45.813Z] [hosting] uploading with 200 concurrency
+[debug] [2022-11-15T20:44:45.969Z] [hosting] hash cache [YnVpbGQ] stored for 16 files
+[debug] [2022-11-15T20:44:45.969Z] [hosting][hash queue][FINAL] {"max":148,"min":6,"avg":17.0625,"active":0,"complete":16,"success":16,"errored":0,"retried":0,"total":16,"elapsed":152}
+[debug] [2022-11-15T20:44:45.970Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/255258810705/sites/encuestas-app-6ec15/versions/9ab0044016d750e7:populateFiles [none]
+[debug] [2022-11-15T20:44:45.970Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/255258810705/sites/encuestas-app-6ec15/versions/9ab0044016d750e7:populateFiles {"files":{"/asset-manifest.json":"9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7","/favicon.ico":"b72f7455f00e4e58792d2bca892abb068e2213838c0316d6b7a0d6d16acd1955","/logo192.png":"caff018b7f1e8fd481eb1c50d75b0ef236bcd5078b1d15c8bb348453fee30293","/manifest.json":"341d52628782f8ac9290bbfc43298afccb47b7cbfcee146ae30cf0f46bc30900","/robots.txt":"391d14b3c2f8c9143a27a28c7399585142228d4d1bdbe2c87ac946de411fa9a2","/index.html":"139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f","/img/logo-tuvansa.png":"810301609ef0d2427fbfe522968343afeb277891557b8c611b6bf07d7a67d27e","/static/css/main.9ee7342b.css":"d19b4cba81130f78f26f427433682dc7bcea91bcd50954ac920622a33480708b","/static/css/main.9ee7342b.css.map":"c147c789dcc4828cd5b107981134fa2959bbe3113ed4f572dc6756e4e6a15ec0","/static/js/main.0dc2bbc4.js.LICENSE.txt":"ca04e48468ca46e8d2d535fc89b077f335b2243157beac1fa8064f14cb4b2014","/static/js/787.4e97cf77.chunk.js":"90fb0b4d9fa1bef88f484eedfbac5f296172ffe4d76592a4fc9bf8adb73e12fc","/static/js/787.4e97cf77.chunk.js.map":"38927661ff6cec6ca59e563e55a17387a7f300e7f603fa74166e2c0ef3aea77c","/logo512.png":"191fc21360b4ccfb1cda11a1efb97f489ed22672ca83f4064316802bbfdd750e","/logo-tuvansa.ico":"b1eac804143ae7b73328fd8b2158264aa8249a72d200d71be6b2d05707f8e55d","/static/js/main.0dc2bbc4.js":"d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c","/static/js/main.0dc2bbc4.js.map":"de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88"}}
+[debug] [2022-11-15T20:44:46.547Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/255258810705/sites/encuestas-app-6ec15/versions/9ab0044016d750e7:populateFiles 200
+[debug] [2022-11-15T20:44:46.547Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/255258810705/sites/encuestas-app-6ec15/versions/9ab0044016d750e7:populateFiles {"uploadRequiredHashes":["de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88","9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7","d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c","139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f"],"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files"}
+[debug] [2022-11-15T20:44:46.549Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [none]
+[debug] [2022-11-15T20:44:46.549Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [stream]
+[debug] [2022-11-15T20:44:46.551Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [none]
+[debug] [2022-11-15T20:44:46.551Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [stream]
+[debug] [2022-11-15T20:44:46.552Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [none]
+[debug] [2022-11-15T20:44:46.552Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [stream]
+[debug] [2022-11-15T20:44:46.553Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [none]
+[debug] [2022-11-15T20:44:46.553Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [stream]
+[debug] [2022-11-15T20:44:46.554Z] [hosting][populate queue][FINAL] {"max":581,"min":581,"avg":581,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":586}
+[debug] [2022-11-15T20:44:46.554Z] [hosting] uploads queued: 4
+[debug] [2022-11-15T20:45:16.954Z] [uploadQueue] Retrying task de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88
+[debug] [2022-11-15T20:45:16.955Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [none]
+[debug] [2022-11-15T20:45:16.956Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [stream]
+[debug] [2022-11-15T20:45:16.959Z] [uploadQueue] Retrying task 9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7
+[debug] [2022-11-15T20:45:16.959Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [none]
+[debug] [2022-11-15T20:45:16.960Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [stream]
+[debug] [2022-11-15T20:45:16.961Z] [uploadQueue] Retrying task d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c
+[debug] [2022-11-15T20:45:16.962Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [none]
+[debug] [2022-11-15T20:45:16.962Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [stream]
+[debug] [2022-11-15T20:45:16.963Z] [uploadQueue] Retrying task 139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f
+[debug] [2022-11-15T20:45:16.964Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [none]
+[debug] [2022-11-15T20:45:16.964Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [stream]
+[debug] [2022-11-15T20:45:47.756Z] [uploadQueue] Retrying task de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88
+[debug] [2022-11-15T20:45:47.758Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [none]
+[debug] [2022-11-15T20:45:47.758Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [stream]
+[debug] [2022-11-15T20:45:47.761Z] [uploadQueue] Retrying task 9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7
+[debug] [2022-11-15T20:45:47.762Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [none]
+[debug] [2022-11-15T20:45:47.762Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [stream]
+[debug] [2022-11-15T20:45:47.764Z] [uploadQueue] Retrying task d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c
+[debug] [2022-11-15T20:45:47.765Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [none]
+[debug] [2022-11-15T20:45:47.765Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [stream]
+[debug] [2022-11-15T20:45:47.767Z] [uploadQueue] Retrying task 139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f
+[debug] [2022-11-15T20:45:47.769Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [none]
+[debug] [2022-11-15T20:45:47.770Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [stream]
+[debug] [2022-11-15T20:46:19.360Z] [uploadQueue] Retrying task de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88
+[debug] [2022-11-15T20:46:19.362Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [none]
+[debug] [2022-11-15T20:46:19.362Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [stream]
+[debug] [2022-11-15T20:46:19.367Z] [uploadQueue] Retrying task 9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7
+[debug] [2022-11-15T20:46:19.368Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [none]
+[debug] [2022-11-15T20:46:19.368Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [stream]
+[debug] [2022-11-15T20:46:19.370Z] [uploadQueue] Retrying task d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c
+[debug] [2022-11-15T20:46:19.370Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [none]
+[debug] [2022-11-15T20:46:19.370Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [stream]
+[debug] [2022-11-15T20:46:19.371Z] [uploadQueue] Retrying task 139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f
+[debug] [2022-11-15T20:46:19.372Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [none]
+[debug] [2022-11-15T20:46:19.372Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [stream]
+[debug] [2022-11-15T20:46:52.566Z] [uploadQueue] Retrying task de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88
+[debug] [2022-11-15T20:46:52.569Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [none]
+[debug] [2022-11-15T20:46:52.570Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [stream]
+[debug] [2022-11-15T20:46:52.572Z] [uploadQueue] Retrying task 9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7
+[debug] [2022-11-15T20:46:52.573Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [none]
+[debug] [2022-11-15T20:46:52.573Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [stream]
+[debug] [2022-11-15T20:46:52.574Z] [uploadQueue] Retrying task d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c
+[debug] [2022-11-15T20:46:52.574Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [none]
+[debug] [2022-11-15T20:46:52.574Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [stream]
+[debug] [2022-11-15T20:46:52.575Z] [uploadQueue] Retrying task 139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f
+[debug] [2022-11-15T20:46:52.575Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [none]
+[debug] [2022-11-15T20:46:52.575Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [stream]
+[debug] [2022-11-15T20:47:28.971Z] [uploadQueue] Retrying task de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88
+[debug] [2022-11-15T20:47:28.972Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [none]
+[debug] [2022-11-15T20:47:28.973Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [stream]
+[debug] [2022-11-15T20:47:28.974Z] [uploadQueue] Retrying task 9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7
+[debug] [2022-11-15T20:47:28.974Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [none]
+[debug] [2022-11-15T20:47:28.974Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [stream]
+[debug] [2022-11-15T20:47:28.975Z] [uploadQueue] Retrying task d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c
+[debug] [2022-11-15T20:47:28.975Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [none]
+[debug] [2022-11-15T20:47:28.975Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [stream]
+[debug] [2022-11-15T20:47:28.976Z] [uploadQueue] Retrying task 139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f
+[debug] [2022-11-15T20:47:28.976Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [none]
+[debug] [2022-11-15T20:47:28.976Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [stream]
+[debug] Task de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 failed: retries exhausted after 6 attempts, with error: Timeout reached making request to https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88
+[debug] [2022-11-15T20:47:58.974Z] [hosting][upload queue][FINAL] {"max":0,"min":9999999999,"avg":0,"active":3,"complete":1,"success":0,"errored":1,"retried":20,"total":4,"elapsed":192427}
+[debug] Task 9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 failed: retries exhausted after 6 attempts, with error: Timeout reached making request to https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7
+[debug] Task d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c failed: retries exhausted after 6 attempts, with error: Timeout reached making request to https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c
+[debug] Task 139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f failed: retries exhausted after 6 attempts, with error: Timeout reached making request to https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/9ab0044016d750e7/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f
+[debug] [2022-11-15T20:48:03.986Z] Error: Timed out.
+    at Timeout._onTimeout (/usr/local/lib/node_modules/firebase-tools/lib/utils.js:253:49)
+    at listOnTimeout (node:internal/timers:557:17)
+    at processTimers (node:internal/timers:500:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2022-11-15T20:50:07.549Z] ----------------------------------------------------------------------
+[debug] [2022-11-15T20:50:07.550Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2022-11-15T20:50:07.550Z] CLI Version:   11.16.0
+[debug] [2022-11-15T20:50:07.550Z] Platform:      darwin
+[debug] [2022-11-15T20:50:07.550Z] Node Version:  v16.10.0
+[debug] [2022-11-15T20:50:07.550Z] Time:          Tue Nov 15 2022 14:50:07 GMT-0600 (hora estándar central)
+[debug] [2022-11-15T20:50:07.550Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-11-15T20:50:07.579Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-11-15T20:50:07.580Z] > authorizing via signed-in user (erick.vane.yerik@gmail.com)
+[debug] [2022-11-15T20:50:07.580Z] [iam] checking project encuestas-app-6ec15 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-11-15T20:50:07.580Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/encuestas-app-6ec15:testIamPermissions [none]
+[debug] [2022-11-15T20:50:07.581Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/encuestas-app-6ec15:testIamPermissions x-goog-quota-user=projects/encuestas-app-6ec15
+[debug] [2022-11-15T20:50:07.581Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/encuestas-app-6ec15:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-11-15T20:50:07.991Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/encuestas-app-6ec15:testIamPermissions 200
+[debug] [2022-11-15T20:50:07.992Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/encuestas-app-6ec15:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-11-15T20:50:07.993Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/encuestas-app-6ec15 [none]
+[debug] [2022-11-15T20:50:08.379Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/encuestas-app-6ec15 200
+[debug] [2022-11-15T20:50:08.379Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/encuestas-app-6ec15 {"projectId":"encuestas-app-6ec15","projectNumber":"255258810705","displayName":"encuestas-app","name":"projects/encuestas-app-6ec15","resources":{"hostingSite":"encuestas-app-6ec15"},"state":"ACTIVE","etag":"1_92fd496c-a224-43a2-9d47-29a9b3f50581"}
+[info] 
+[info] === Deploying to 'encuestas-app-6ec15'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2022-11-15T20:50:08.387Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/versions [none]
+[debug] [2022-11-15T20:50:08.387Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2022-11-15T20:50:09.203Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/versions 200
+[debug] [2022-11-15T20:50:09.203Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/versions {"name":"projects/255258810705/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[encuestas-app-6ec15]: beginning deploy... 
+[info] i  hosting[encuestas-app-6ec15]: found 16 files in build 
+[debug] [2022-11-15T20:50:38.407Z] [hosting] uploading with 200 concurrency
+[debug] [2022-11-15T20:50:38.414Z] [hosting] hash cache [YnVpbGQ] stored for 16 files
+[debug] [2022-11-15T20:50:38.414Z] [hosting][hash queue][FINAL] {"max":1,"min":0,"avg":0,"active":0,"complete":16,"success":16,"errored":0,"retried":0,"total":16,"elapsed":4}
+[debug] [2022-11-15T20:50:38.414Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/255258810705/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4:populateFiles [none]
+[debug] [2022-11-15T20:50:38.414Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/255258810705/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4:populateFiles {"files":{"/asset-manifest.json":"9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7","/favicon.ico":"b72f7455f00e4e58792d2bca892abb068e2213838c0316d6b7a0d6d16acd1955","/index.html":"139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f","/logo-tuvansa.ico":"b1eac804143ae7b73328fd8b2158264aa8249a72d200d71be6b2d05707f8e55d","/logo192.png":"caff018b7f1e8fd481eb1c50d75b0ef236bcd5078b1d15c8bb348453fee30293","/logo512.png":"191fc21360b4ccfb1cda11a1efb97f489ed22672ca83f4064316802bbfdd750e","/manifest.json":"341d52628782f8ac9290bbfc43298afccb47b7cbfcee146ae30cf0f46bc30900","/robots.txt":"391d14b3c2f8c9143a27a28c7399585142228d4d1bdbe2c87ac946de411fa9a2","/img/logo-tuvansa.png":"810301609ef0d2427fbfe522968343afeb277891557b8c611b6bf07d7a67d27e","/static/css/main.9ee7342b.css":"d19b4cba81130f78f26f427433682dc7bcea91bcd50954ac920622a33480708b","/static/css/main.9ee7342b.css.map":"c147c789dcc4828cd5b107981134fa2959bbe3113ed4f572dc6756e4e6a15ec0","/static/js/787.4e97cf77.chunk.js":"90fb0b4d9fa1bef88f484eedfbac5f296172ffe4d76592a4fc9bf8adb73e12fc","/static/js/787.4e97cf77.chunk.js.map":"38927661ff6cec6ca59e563e55a17387a7f300e7f603fa74166e2c0ef3aea77c","/static/js/main.0dc2bbc4.js":"d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c","/static/js/main.0dc2bbc4.js.LICENSE.txt":"ca04e48468ca46e8d2d535fc89b077f335b2243157beac1fa8064f14cb4b2014","/static/js/main.0dc2bbc4.js.map":"de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88"}}
+[debug] [2022-11-15T20:50:39.413Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/255258810705/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4:populateFiles 200
+[debug] [2022-11-15T20:50:39.413Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/255258810705/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4:populateFiles {"uploadRequiredHashes":["d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c","139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f","9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7","de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88"],"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files"}
+[debug] [2022-11-15T20:50:39.415Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [none]
+[debug] [2022-11-15T20:50:39.415Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [stream]
+[debug] [2022-11-15T20:50:39.416Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [none]
+[debug] [2022-11-15T20:50:39.417Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [stream]
+[debug] [2022-11-15T20:50:39.417Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [none]
+[debug] [2022-11-15T20:50:39.417Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [stream]
+[debug] [2022-11-15T20:50:39.418Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [none]
+[debug] [2022-11-15T20:50:39.418Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [stream]
+[debug] [2022-11-15T20:50:39.419Z] [hosting][populate queue][FINAL] {"max":1003,"min":1003,"avg":1003,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":1007}
+[debug] [2022-11-15T20:50:39.419Z] [hosting] uploads queued: 4
+[debug] [2022-11-15T20:50:43.153Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f 200
+[debug] [2022-11-15T20:50:43.154Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/139f7c4d87cc0b0d8c6cf88218f905652a74e562a15b6751883af0c8fb67c80f [stream]
+[debug] [2022-11-15T20:50:43.164Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 200
+[debug] [2022-11-15T20:50:43.165Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/9281d8b4af13f7c5e70daa1c0f7c5cc3a2768c5f4e9fbe4a6a4163e7e32b79e7 [stream]
+[debug] [2022-11-15T20:50:43.258Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 200
+[debug] [2022-11-15T20:50:43.258Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/de30fe14b94fdc67e21540f1b20f48c4c6724df6b66c6daf1bfb97cc25705d88 [stream]
+[debug] [2022-11-15T20:50:43.269Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c 200
+[debug] [2022-11-15T20:50:43.269Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4/files/d778ca340a6f449a59f1af38ccec4408a8f00af1b52d788047912b4e1e5b408c [stream]
+[debug] [2022-11-15T20:50:43.270Z] [hosting][upload queue][FINAL] {"max":3857,"min":3740,"avg":3797.5,"active":0,"complete":4,"success":4,"errored":0,"retried":0,"total":4,"elapsed":3857}
+[info] ✔  hosting[encuestas-app-6ec15]: file upload complete 
+[debug] [2022-11-15T20:50:43.274Z] [hosting] deploy completed after 4879ms
+[debug] [2022-11-15T20:50:43.277Z] [
+  {
+    "config": {
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "encuestas-app-6ec15"
+    },
+    "version": "projects/255258810705/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4"
+  }
+]
+[info] i  hosting[encuestas-app-6ec15]: finalizing version... 
+[debug] [2022-11-15T20:50:43.279Z] >>> [apiv2][query] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4 updateMask=status%2Cconfig
+[debug] [2022-11-15T20:50:43.280Z] >>> [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4 {"status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]}}
+[debug] [2022-11-15T20:50:43.793Z] <<< [apiv2][status] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4 200
+[debug] [2022-11-15T20:50:43.793Z] <<< [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4 {"name":"projects/255258810705/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2022-11-15T20:50:08.871867Z","createUser":{"email":"erick.vane.yerik@gmail.com"},"finalizeTime":"2022-11-15T20:50:43.829762Z","finalizeUser":{"email":"erick.vane.yerik@gmail.com"}}
+[debug] [2022-11-15T20:50:43.794Z] [hosting] finalized version for encuestas-app-6ec15:[object Object]
+[info] ✔  hosting[encuestas-app-6ec15]: version finalized 
+[info] i  hosting[encuestas-app-6ec15]: releasing new version... 
+[debug] [2022-11-15T20:50:43.795Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/channels/live/releases versionName=projects%2F255258810705%2Fsites%2Fencuestas-app-6ec15%2Fversions%2Ff1d09c5cb3ac0fe4
+[debug] [2022-11-15T20:50:43.795Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/channels/live/releases {}
+[debug] [2022-11-15T20:50:44.337Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/channels/live/releases 200
+[debug] [2022-11-15T20:50:44.337Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/encuestas-app-6ec15/channels/live/releases {"name":"projects/255258810705/sites/encuestas-app-6ec15/channels/live/releases/1668545443680042","version":{"name":"projects/255258810705/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2022-11-15T20:50:08.871867Z","createUser":{"email":"erick.vane.yerik@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ALm5wu2WkNGlH7iq24kCd-xEK6GtqbZ5OzvlpWQoVkpzbbA"},"finalizeTime":"2022-11-15T20:50:43.829762Z","finalizeUser":{"email":"erick.vane.yerik@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ALm5wu2WkNGlH7iq24kCd-xEK6GtqbZ5OzvlpWQoVkpzbbA"}},"type":"DEPLOY","releaseTime":"2022-11-15T20:50:43.680042383Z","releaseUser":{"email":"erick.vane.yerik@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ALm5wu2WkNGlH7iq24kCd-xEK6GtqbZ5OzvlpWQoVkpzbbA"}}
+[debug] [2022-11-15T20:50:44.337Z] [hosting] release: {"name":"projects/255258810705/sites/encuestas-app-6ec15/channels/live/releases/1668545443680042","version":{"name":"projects/255258810705/sites/encuestas-app-6ec15/versions/f1d09c5cb3ac0fe4","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2022-11-15T20:50:08.871867Z","createUser":{"email":"erick.vane.yerik@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ALm5wu2WkNGlH7iq24kCd-xEK6GtqbZ5OzvlpWQoVkpzbbA"},"finalizeTime":"2022-11-15T20:50:43.829762Z","finalizeUser":{"email":"erick.vane.yerik@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ALm5wu2WkNGlH7iq24kCd-xEK6GtqbZ5OzvlpWQoVkpzbbA"}},"type":"DEPLOY","releaseTime":"2022-11-15T20:50:43.680042383Z","releaseUser":{"email":"erick.vane.yerik@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ALm5wu2WkNGlH7iq24kCd-xEK6GtqbZ5OzvlpWQoVkpzbbA"}}
+[info] ✔  hosting[encuestas-app-6ec15]: release complete 
+[info] 
+[info] ✔  Deploy complete! 
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/encuestas-app-6ec15/overview
+[info] Hosting URL: https://encuestas-app-6ec15.web.app
+[debug] [2022-11-15T20:51:24.363Z] Error: Timed out.
+    at Timeout._onTimeout (/usr/local/lib/node_modules/firebase-tools/lib/utils.js:253:49)
+    at listOnTimeout (node:internal/timers:557:17)
+    at processTimers (node:internal/timers:500:7)
+[error] 
+[error] Error: An unexpected error has occurred.

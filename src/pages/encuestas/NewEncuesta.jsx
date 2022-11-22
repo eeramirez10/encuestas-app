@@ -11,13 +11,13 @@ const NewEncuesta = () => {
     const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
     const [location, setLocation] = useLocation();
 
-    
+
 
     const handleOnChange = ({ target }) => {
 
         dispatch({
-            type:'CHANGE_INPUT',
-            payload:{
+            type: 'CHANGE_INPUT',
+            payload: {
                 name: target.name,
                 value: target.value
             }
@@ -39,26 +39,27 @@ const NewEncuesta = () => {
         }
 
         dispatch({
-            type:"CHANGE_VALIDATED"
+            type: "CHANGE_VALIDATED"
         })
 
-        
+
 
         if (!formIsValid) return
 
 
         fetchAPI({
-            endpoint:'encuesta',
-            method:'POST',
+            endpoint: 'encuesta',
+            method: 'POST',
             data: state.values
         })
-        .then( () =>  setLocation("/"))
-        .catch(console.log)
+            .then(() => setLocation("/"))
+            .catch(console.log)
     }
 
 
 
     return (
+
         <Form noValidate validated={state.validated} onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Nombre</Form.Label>

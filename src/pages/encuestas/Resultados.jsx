@@ -23,10 +23,12 @@ const Resultados = ({ params }) => {
 
             {
                 encuesta.preguntas.map((p, i) => (
+
+                    
                     <div key={i}>
 
                         {
-                            i === current  && (
+                            current  === i  && (
 
                                 <>
 

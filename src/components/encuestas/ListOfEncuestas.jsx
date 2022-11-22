@@ -5,22 +5,26 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { useLocation } from 'wouter';
 import AsignarEncuesta from './AsignarEncuesta';
 import { Col, Row } from 'react-bootstrap';
+import ModalComponent from '../modals/ModalComponent';
+import { useModal } from '../../hooks/useModal';
+
 
 
 const ListOfEncuestas = ({ encuestas }) => {
+
+    const { handleShow } = useModal();
+
     const [, setLocation] = useLocation();
 
-    const [show, setShow] = useState(false);
     const [encuesta, setEncuesta] = useState({})
 
-    const handleClose = () => {
-        setShow(false)
 
-    };
-    const handleShow = (encuesta) => {
-        setShow(true)
+    const handleEncuesta = (encuesta) => {
+
         setEncuesta(encuesta)
-    };
+    }
+
+
 
     const handleClick = (path) => {
         setLocation(path)
@@ -74,11 +78,17 @@ const ListOfEncuestas = ({ encuestas }) => {
                                         <Dropdown.Item onClick={() => handleClick(`/encuesta/resultados/${encuesta._id}`)} >
                                             Resultados
                                         </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => handleShow(encuesta)} >Asignar</Dropdown.Item>
+                                        <Dropdown.Item onClick={() => {
+                                            handleEncuesta(encuesta)
+                                            handleShow();
+                                        }}
+                                        >Asignar</Dropdown.Item>
+
+
                                         <Dropdown.Item onClick={() => handleClick(`/encuesta/${encuesta._id}`)} >Ver</Dropdown.Item>
 
                                         <Dropdown.Divider />
-                                    <Dropdown.Item onClick={()=> handleClick(`/encuesta/edit/${encuesta._id}`) } >Editar</Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleClick(`/encuesta/edit/${encuesta._id}`)} >Editar</Dropdown.Item>
                                         <Dropdown.Item >Eliminar</Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
@@ -90,14 +100,12 @@ const ListOfEncuestas = ({ encuestas }) => {
 
             </Row>
 
-
-
-            <AsignarEncuesta
-                show={show}
-                handleClose={handleClose}
-                handleShow={handleShow}
-                encuesta={encuesta}
+            <ModalComponent
+                title={encuesta.nombre}
+                children={<AsignarEncuesta encuesta={encuesta} />}
             />
+
+
 
 
 

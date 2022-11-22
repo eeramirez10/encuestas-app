@@ -31,14 +31,11 @@ const pregunta_initial_state = {
 
 export const useEncuesta = ({ idEncuesta, idUsuario }) => {
 
-    
-    console.log({ idEncuesta, idUsuario })
-    
     const [, setLocation] = useLocation();
 
     const [current, setCurrent] = useState(0);
     const [encuesta, setEncuesta] = useState(INITIAL_STATE)
-    const [length, setLength] = useState(null)
+    const [length, setLength] = useState(0)
     const [activeIndex, setActiveIndex] = useState(null)
     const [preguntas, setPreguntas] = useState([])
 
@@ -46,12 +43,21 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
 
     const [currentUser, setCurrentUser] = useState({})
 
-    const [IstextareaEmpty, setIsTextareaEmpty] = useState(true)
+    const [IstextareaEmpty, setIsTextareaEmpty] = useState(true);
+
+    const [isEncuestaContestada, setIsEncuestaContestada] = useState(true)
+
+    const [isLoading, setIsLoading] = useState(true);
+
+    const [isEncuestaAsignada, setIsEncuestaAsignada] = useState(false);
+
 
 
     useEffect(() => {
 
         let isMounted = true;
+
+        setIsLoading(true)
         const controller = new AbortController()
 
         fetchAPI({
@@ -64,20 +70,27 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
                 const resp = await encuestas.json()
 
                 isMounted && setEncuesta(resp.data);
-                setLength(resp.data.preguntas.length )
+                setLength(resp.data.preguntas.length)
             })
 
-        if (!idUsuario === "null" || idUsuario ) {
+        if (!idUsuario === "null" || idUsuario) {
 
             fetchAPI({
                 endpoint: `usuarios/${idUsuario}`,
                 method: 'GET'
             })
-                .then(async (usuario) => {
-                    const resp = await usuario.json()
+                .then(async (resp) => {
 
-                    console.log(resp)
-                    setCurrentUser(resp.usuario)
+
+                    const { usuario } = await resp.json();
+
+                    setIsEncuestaAsignada( usuario.encuestas?.some(user => user.encuesta === idEncuesta)  )
+
+                    setIsEncuestaContestada(usuario.encuestas?.some(user => user.encuesta === idEncuesta && user.contestada))
+                    setCurrentUser(usuario);
+
+                    setIsLoading(false)
+
                 })
         }
 
@@ -88,22 +101,48 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
 
     }, [setEncuesta, idEncuesta, idUsuario])
 
+    useEffect(() => {
 
-    const prevPregunta = () => {
 
-        setCurrent(current === 0 ? length  : current - 1)
+
+        if (pregunta._id) {
+
+            setPreguntas([...preguntas, pregunta])
+
+            setPregunta(pregunta_initial_state)
+
+            setActiveIndex(null)
+
+        }
+
+
+    }, [current]);
+
+ 
+
+
+    const handleSubmit = () => {
+        sendRespuestas()
     }
+
+
+
 
     const nextPregunta = () => {
 
-        setPreguntas([...preguntas, pregunta])
+        // setPreguntas([...preguntas, pregunta])
 
-        setPregunta(pregunta_initial_state)
+        // setPregunta(pregunta_initial_state)
 
-        setCurrent(current === length  ? 0 : current + 1);
 
-        setActiveIndex(null)
+        // setActiveIndex(null)
 
+        setCurrent(current === length - 1 ? 0 : current + 1);
+    }
+
+    const prevPregunta = () => {
+
+        setCurrent(current === 0 ? length - 1 : current - 1)
     }
 
     const handleOnCLickOpcion = (opcion, index) => {
@@ -129,9 +168,12 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
     const handleOnchange = (e) => {
 
 
-        const Pregunta = encuesta.preguntas[current];
+        let Pregunta = encuesta.preguntas[current];
+
 
         setIsTextareaEmpty(!e.target.value)
+
+        console.log(Pregunta)
 
         setPregunta({
             ...Pregunta,
@@ -144,19 +186,48 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
         })
 
 
+        if (!preguntas[current]) {
+
+
+            setPreguntas([...preguntas, {
+                ...Pregunta,
+                opcion: {
+                    ...Pregunta.opciones[0],
+                    [e.target.name]: e.target.value,
+                    type: "textarea",
+                    valor: 1
+                }
+            }])
+
+            setPregunta(pregunta_initial_state)
+
+        }
+
+        preguntas[current] = {
+
+            ...Pregunta,
+            opcion: {
+                ...Pregunta.opciones[0],
+                [e.target.name]: e.target.value,
+                type: "textarea",
+                valor: 1
+            }
+
+        }
+
     }
 
-    const handleOnBlur = () => {
 
 
-        setActiveIndex(0)
 
-    }
+
+
 
     const sendRespuestas = async () => {
 
 
-        loadingAlert({})
+        loadingAlert({});
+
 
         try {
 
@@ -175,7 +246,7 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
             return setLocation('/encuesta/finish')
 
         } catch (error) {
-            return alertError({text:"Hubo un error"})
+            return alertError({ text: "Hubo un error" })
         }
 
 
@@ -184,15 +255,18 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
 
 
 
-    const isEncuestaContestada = () => {
+    // const isEncuestaContestada = () => {
 
-        console.log(currentUser)
+    //     return currentUser.encuestas?.some(user => user.encuesta === idEncuesta && user.contestada )
 
-        return currentUser.encuestas?.some(encuesta => encuesta.contestada === true)
-    }
+
+    // }
 
     const fechaContestada = () => {
-        return currentUser.encuestas.map(encuesta => encuesta.dateContestada)
+
+        // const [encuesta] = currentUser.encuestas.filter(user => user.encuesta === idEncuesta)
+
+        return 'encuesta.dateContestada'
     }
 
 
@@ -202,16 +276,19 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
         fechaContestada,
         isEncuestaContestada,
         sendRespuestas,
-        handleOnBlur,
+
         handleOnchange,
         handleOnCLickOpcion,
+        handleSubmit,
         current,
         encuesta,
         length,
         activeIndex,
         preguntas,
         pregunta,
-        IstextareaEmpty
+        IstextareaEmpty,
+        isLoading,
+        isEncuestaAsignada
 
     }
 }

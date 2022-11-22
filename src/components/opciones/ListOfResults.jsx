@@ -6,6 +6,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import { fetchAPI } from '../../helpers/fetch';
 import ListOfUsers from '../users/ListOfUsers';
+import { useEffect } from 'react';
 
 
 
@@ -67,6 +68,7 @@ const ListOfResults = ({ opciones, isComentario = false }) => {
 
                     <MultiOpciones
                         opciones={opciones}
+                        usuarios={ usuarios}
                         popover={popover}
                         handleOnClickPop={handleOnClickPop}
                         handleOnExit={handleOnExit}
@@ -84,7 +86,8 @@ const ListOfResults = ({ opciones, isComentario = false }) => {
 }
 
 
-const MultiOpciones = ({ opciones, popover, handleOnClickPop, handleOnExit }) => {
+const MultiOpciones = ({ opciones, popover, handleOnClickPop, handleOnExit, usuarios }) => {
+
 
 
     const colorVariant = (porcentaje) => {
@@ -112,6 +115,8 @@ const MultiOpciones = ({ opciones, popover, handleOnClickPop, handleOnExit }) =>
     }
 
     const porcentajeTotal = (votos) => {
+
+       
 
         if (votos === 0) return votos;
 

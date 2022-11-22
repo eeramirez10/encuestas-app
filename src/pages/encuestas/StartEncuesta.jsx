@@ -8,6 +8,8 @@ import { Form } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { useEffect } from 'react';
 
+import Loading from '../../components/UI/Loading';
+
 
 
 const StartEncuesta = ({ params }) => {
@@ -17,6 +19,7 @@ const StartEncuesta = ({ params }) => {
     const {
         nextPregunta,
         fechaContestada,
+        handleSubmit,
         isEncuestaContestada,
         sendRespuestas,
         handleOnBlur,
@@ -27,14 +30,25 @@ const StartEncuesta = ({ params }) => {
         length,
         activeIndex,
         pregunta,
-        IstextareaEmpty
+        IstextareaEmpty,
+        isLoading,
+        isEncuestaAsignada
+        // {nombre:"Antonio Salazar"}
     } = useEncuesta({ idEncuesta, idUsuario })
+
+
+
 
     useEffect(() => {
 
-   
 
-        if (!isEncuestaContestada()) {
+
+
+
+
+
+
+        if (!isEncuestaContestada && isEncuestaAsignada) {
             Swal.fire({
                 title: '<strong>Informacion</strong>',
                 icon: 'info',
@@ -77,11 +91,22 @@ const StartEncuesta = ({ params }) => {
 
 
 
-    }, [])
+    }, [isEncuestaContestada])
 
 
 
-    if (isEncuestaContestada()) {
+    if (!isEncuestaAsignada && !isLoading) {
+
+        return <div className="alert alert-danger" role="alert">
+
+            <h2> No tienes esta encuesta asignada </h2>
+
+        </div>
+    }
+
+
+
+    if (isEncuestaContestada && !isLoading) {
 
         return (
 
@@ -89,7 +114,7 @@ const StartEncuesta = ({ params }) => {
 
                 <div className="alert alert-warning" role="alert">
 
-                    <h2> Esta encuesta ya fue contestada el {fechaContestada()} </h2>
+                    <h2> Esta encuesta ya fue contestada </h2>
 
                 </div>
             </>
@@ -97,8 +122,8 @@ const StartEncuesta = ({ params }) => {
 
     }
 
-    
-  
+
+
 
 
 
@@ -109,34 +134,40 @@ const StartEncuesta = ({ params }) => {
 
             {
 
-                current === length ?
+                isLoading ?
 
-                    <Card  >
-                        <Card.Body>
-                            <Card.Title>
-                                <div className='text-center'>
-                                    <div className='flex-grow-1'> Da click en en terminar para guardar tus respuestas  </div>
-
-                                </div>
-                            </Card.Title>
-                        </Card.Body>
-
-
-                        <Card.Body className=''>
-
-
-                            <Button
-                                variant="success"
-                                onClick={sendRespuestas}
-                            >
-                                Terminar encuesta
-                            </Button>
-
-
-                        </Card.Body>
-                    </Card>
+                    <Loading />
 
                     :
+
+                    // current === (length - 1) ?
+
+                    //     <Card  >
+                    //         <Card.Body>
+                    //             <Card.Title>
+                    //                 <div className='text-center'>
+                    //                     <div className='flex-grow-1'> Da click en en terminar para guardar tus respuestas  </div>
+
+                    //                 </div>
+                    //             </Card.Title>
+                    //         </Card.Body>
+
+
+                    //         <Card.Body className=''>
+
+
+                    //             <Button
+                    //                 variant="success"
+                    //                 onClick={sendRespuestas}
+                    //             >
+                    //                 Terminar encuesta
+                    //             </Button>
+
+
+                    //         </Card.Body>
+                    //     </Card>
+
+                    //     :
 
                     <Card  >
 
@@ -153,10 +184,12 @@ const StartEncuesta = ({ params }) => {
                         {
                             encuesta.preguntas.map((p, i) => {
 
+
+
                                 return <div key={i}>
 
                                     {
-                                        i === current && (
+                                        current === i && (
 
                                             <>
 
@@ -178,9 +211,7 @@ const StartEncuesta = ({ params }) => {
                                                             placeholder="Escriba su respuesta"
                                                             name="descripcion"
                                                             value={pregunta.opcion.descripcion}
-                                                            onChange={(e) => handleOnchange(e)}
-
-
+                                                            onChange={handleOnchange}
 
                                                         />
                                                         :
@@ -189,7 +220,6 @@ const StartEncuesta = ({ params }) => {
                                                             opciones={p.opciones}
                                                             handleOnCLickOpcion={handleOnCLickOpcion}
                                                             handleOnchange={handleOnchange}
-                                                            handleOnBlur={handleOnBlur}
                                                             activeIndex={activeIndex}
                                                             pregunta={pregunta}
                                                         />
@@ -211,20 +241,36 @@ const StartEncuesta = ({ params }) => {
 
                         <Card.Body className=''>
 
-                            <div className='d-flex'>
-                                <Button
-                                    variant="primary"
-                                    className='me-auto'
-                                    onClick={nextPregunta}
-                                    disabled={activeIndex === null && IstextareaEmpty}
+                            {
+                                current === (length - 1) ?
 
-                                >
-                                    Siguente
-                                </Button>
-                                <div >
-                                    <strong>{current + 1} de {length} preguntas</strong>
-                                </div>
-                            </div>
+                                    <Button
+                                        variant="success"
+                                        onClick={handleSubmit}
+                                    >
+                                        Terminar encuesta
+                                    </Button>
+
+                                    :
+
+                                    <div className='d-flex'>
+                                        <Button
+                                            variant="primary"
+                                            className='me-auto'
+                                            onClick={nextPregunta}
+
+                                            disabled={activeIndex === null && IstextareaEmpty}
+
+                                        >
+                                            Siguente
+                                        </Button>
+                                        <div >
+                                            <strong>{current + 1} de {length} preguntas</strong>
+                                        </div>
+                                    </div>
+
+                            }
+
 
 
                         </Card.Body>

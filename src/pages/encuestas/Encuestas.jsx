@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Spinner from 'react-bootstrap/Spinner';
+
 
 import ListOfEncuestas from '../../components/encuestas/ListOfEncuestas'
+import Loading from '../../components/UI/Loading';
 import { alertError } from '../../helpers/alerts';
 
 import { fetchAPI } from '../../helpers/fetch'
@@ -39,13 +40,7 @@ const Encuestas = () => {
             {
                 isLoading ?
 
-                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100vh' }}>
-
-                        <Spinner size='sm' animation="grow"  />
-                        <Spinner size='sm' animation="grow"  />
-                        <Spinner animation="grow" />
-
-                    </div>
+                   <Loading />
 
 
                     :

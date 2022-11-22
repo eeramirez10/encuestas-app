@@ -12,6 +12,7 @@ import Resultados from './pages/encuestas/Resultados';
 import Usuarios from './pages/usuarios/Usuarios';
 import VerEncuesta from './pages/encuestas/VerEncuesta';
 import EditarEncuesta from './pages/encuestas/EditarEncuesta';
+import { ModalContextProvider } from './context/ModalContext';
 
 function App() {
 
@@ -46,22 +47,34 @@ function App() {
       <Router>
 
 
-        {/* <SideBar /> */}
+        <SideBar />
 
         <div id="detail">
 
           <Switch>
             {/* <Route path='/' component={Home} /> */}
 
+            <ModalContextProvider>
 
-            <Route path='/amkshy' component={Encuestas} />
-            <Route path='/encuesta/new' component={NewEncuesta} />
-            <Route path='/encuesta/add/:idEncuesta' component={AddPreguntas} />
-            <Route path='/encuesta/start/:idEncuesta/:idUsuario' component={StartEncuesta} />
-            <Route path='/encuesta/:idEncuesta' component={VerEncuesta} />
-            <Route path='/encuesta/resultados/:idEncuesta' component={Resultados} />
-            <Route path='/encuesta/edit/:idEncuesta' component={EditarEncuesta} />
-            <Route path='/usuarios' component={Usuarios} />
+
+              <Route  path='/' component={Encuestas} />
+              <Route path='/encuesta/new/add' component={NewEncuesta} />
+              <Route path='/encuesta/add/:idEncuesta' component={AddPreguntas} />
+              <Route path='/encuesta/start/:idEncuesta/:idUsuario' component={StartEncuesta} />
+              <Route path='/encuesta/:idEncuesta' component={VerEncuesta} />
+              <Route path='/encuesta/resultados/:idEncuesta' component={Resultados} />
+              <Route path='/encuesta/edit/:idEncuesta' component={EditarEncuesta} />
+              <Route path='/usuarios' component={Usuarios} />
+
+              
+
+
+            </ModalContextProvider>
+
+
+           
+
+
 
             <Route path="/:rest*">
               {(params) => `404, Sorry the page ${params.rest} does not exist!`}
