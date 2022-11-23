@@ -242,28 +242,28 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
         console.log(preguntas)
 
 
-        // loadingAlert({});
+        loadingAlert({});
 
 
-        // try {
+        try {
 
 
-        //     const body = await fetchAPI({ endpoint: 'encuesta/submit', method: 'POST', data: { idUsuario: currentUser._id, idEncuesta, preguntas } })
+            const body = await fetchAPI({ endpoint: 'encuesta/submit', method: 'POST', data: { idUsuario: currentUser._id, idEncuesta, preguntas } })
 
-        //     const resp = await body.json();
+            const resp = await body.json();
 
-        //     if (!resp.ok) {
+            if (!resp.ok) {
 
-        //         return alertError()
-        //     }
+                return alertError()
+            }
 
-        //     closeLoadingAlert()
+            closeLoadingAlert()
 
-        //     return setLocation('/encuesta/finish')
+            return setLocation('/encuesta/finish')
 
-        // } catch (error) {
-        //     return alertError({ text: "Hubo un error" })
-        // }
+        } catch (error) {
+            return alertError({ text: "Hubo un error" })
+        }
 
 
     }

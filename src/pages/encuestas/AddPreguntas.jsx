@@ -8,7 +8,7 @@ import FormOpciones from '../../components/forms/FormOpciones';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { alertConfirm, alertSuccess } from '../../helpers/alerts';
+import { alertConfirm, alertError, alertSuccess, loadingAlert } from '../../helpers/alerts';
 import { useLocation } from 'wouter';
 import AsignarEstructura from '../../components/opciones/AsignarEstructura';
 
@@ -74,7 +74,7 @@ const AddPreguntas = ({ params }) => {
 
         }
 
-    },[idEncuesta])
+    }, [idEncuesta])
 
 
 
@@ -166,24 +166,32 @@ const AddPreguntas = ({ params }) => {
 
         setValidated(true)
 
-        
-
-        
 
 
-        if (!formIsValid) return
 
-        const preguntas = await fetchAPI({
-            endpoint: 'preguntas', data: {
-                pregunta: inputPreguntas,
-                opciones: inputPreguntas.opciones,
-                idEncuesta
-            }, method: 'POST'
-        })
 
-        const resp = await preguntas.json();
 
-        if (resp.ok) {
+        if (!formIsValid) return;
+
+        loadingAlert({title:"guardando"})
+
+        try {
+
+            const preguntas = await fetchAPI({
+                endpoint: 'preguntas', data: {
+                    pregunta: inputPreguntas,
+                    opciones: inputPreguntas.opciones,
+                    idEncuesta
+                }, method: 'POST'
+            })
+
+            const resp = await preguntas.json();
+
+            
+
+            if (!resp.ok) return alertError({ text: "Hubo un error", })
+
+
 
             await alertSuccess({ title: "Guardado correctamente" })
 
@@ -223,7 +231,15 @@ const AddPreguntas = ({ params }) => {
 
 
 
+
+
+        } catch (error) {
+
+            alertError({text:"Hable con el administrador"})
+
         }
+
+
 
     }
 
