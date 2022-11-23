@@ -29,7 +29,7 @@ const AddPreguntas = ({ params }) => {
 
     const [inputPreguntas, setInputPreguntas] = useState({
         descripcion: '',
-        type: "",
+        type: "multiOpcion",
         opciones: [
             { descripcion: '', type: 'text' }
         ]
@@ -173,6 +173,7 @@ const AddPreguntas = ({ params }) => {
 
         if (!formIsValid) return;
 
+       
         loadingAlert({title:"guardando"})
 
         try {
