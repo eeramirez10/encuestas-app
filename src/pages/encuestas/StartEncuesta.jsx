@@ -25,6 +25,7 @@ const StartEncuesta = ({ params }) => {
         handleOnBlur,
         handleOnchange,
         handleOnCLickOpcion,
+        nextPreguntaStart,
         current,
         encuesta,
         length,
@@ -140,34 +141,34 @@ const StartEncuesta = ({ params }) => {
 
                     :
 
-                    // current === (length - 1) ?
+                    current === (length ) ?
 
-                    //     <Card  >
-                    //         <Card.Body>
-                    //             <Card.Title>
-                    //                 <div className='text-center'>
-                    //                     <div className='flex-grow-1'> Da click en en terminar para guardar tus respuestas  </div>
+                        <Card  >
+                            <Card.Body>
+                                <Card.Title>
+                                    <div className='text-center'>
+                                        <div className='flex-grow-1'> Da click en en terminar para guardar tus respuestas  </div>
 
-                    //                 </div>
-                    //             </Card.Title>
-                    //         </Card.Body>
-
-
-                    //         <Card.Body className=''>
+                                    </div>
+                                </Card.Title>
+                            </Card.Body>
 
 
-                    //             <Button
-                    //                 variant="success"
-                    //                 onClick={sendRespuestas}
-                    //             >
-                    //                 Terminar encuesta
-                    //             </Button>
+                            <Card.Body className=''>
 
 
-                    //         </Card.Body>
-                    //     </Card>
+                                <Button
+                                    variant="success"
+                                    onClick={sendRespuestas}
+                                >
+                                    Terminar encuesta
+                                </Button>
 
-                    //     :
+
+                            </Card.Body>
+                        </Card>
+
+                        :
 
                     <Card  >
 
@@ -242,22 +243,22 @@ const StartEncuesta = ({ params }) => {
                         <Card.Body className=''>
 
                             {
-                                current === (length - 1) ?
+                                // current === (length - 1) ?
 
-                                    <Button
-                                        variant="success"
-                                        onClick={handleSubmit}
-                                    >
-                                        Terminar encuesta
-                                    </Button>
+                                //     <Button
+                                //         variant="success"
+                                //         onClick={handleSubmit}
+                                //     >
+                                //         Terminar encuesta
+                                //     </Button>
 
-                                    :
+                                //     :
 
                                     <div className='d-flex'>
                                         <Button
                                             variant="primary"
                                             className='me-auto'
-                                            onClick={nextPregunta}
+                                            onClick={nextPreguntaStart}
 
                                             disabled={activeIndex === null && IstextareaEmpty}
 

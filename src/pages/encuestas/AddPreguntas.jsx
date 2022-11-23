@@ -166,12 +166,16 @@ const AddPreguntas = ({ params }) => {
 
         setValidated(true)
 
+        
+
+        
+
 
         if (!formIsValid) return
 
         const preguntas = await fetchAPI({
             endpoint: 'preguntas', data: {
-                descripcion: inputPreguntas.descripcion,
+                pregunta: inputPreguntas,
                 opciones: inputPreguntas.opciones,
                 idEncuesta
             }, method: 'POST'

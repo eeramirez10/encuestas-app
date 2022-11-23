@@ -84,7 +84,7 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
 
                     const { usuario } = await resp.json();
 
-                    setIsEncuestaAsignada( usuario.encuestas?.some(user => user.encuesta === idEncuesta)  )
+                    setIsEncuestaAsignada(usuario.encuestas?.some(user => user.encuesta === idEncuesta))
 
                     setIsEncuestaContestada(usuario.encuestas?.some(user => user.encuesta === idEncuesta && user.contestada))
                     setCurrentUser(usuario);
@@ -107,26 +107,38 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
 
         if (pregunta._id) {
 
-            setPreguntas([...preguntas, pregunta])
+            if (pregunta.type !== "comentario") {
+
+                setPreguntas([...preguntas, pregunta])
+            }
+
+
 
             setPregunta(pregunta_initial_state)
 
             setActiveIndex(null)
+
+
 
         }
 
 
     }, [current]);
 
- 
+
 
 
     const handleSubmit = () => {
+
+
+
         sendRespuestas()
     }
 
 
-
+    const nextPreguntaStart = () => {
+        setCurrent(current + 1);
+    }
 
     const nextPregunta = () => {
 
@@ -215,6 +227,8 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
 
         }
 
+        console.log(preguntas)
+
     }
 
 
@@ -225,29 +239,31 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
 
     const sendRespuestas = async () => {
 
-
-        loadingAlert({});
-
-
-        try {
+        console.log(preguntas)
 
 
-            const body = await fetchAPI({ endpoint: 'encuesta/submit', method: 'POST', data: { idUsuario: currentUser._id, idEncuesta, preguntas } })
+        // loadingAlert({});
 
-            const resp = await body.json();
 
-            if (!resp.ok) {
+        // try {
 
-                return alertError()
-            }
 
-            closeLoadingAlert()
+        //     const body = await fetchAPI({ endpoint: 'encuesta/submit', method: 'POST', data: { idUsuario: currentUser._id, idEncuesta, preguntas } })
 
-            return setLocation('/encuesta/finish')
+        //     const resp = await body.json();
 
-        } catch (error) {
-            return alertError({ text: "Hubo un error" })
-        }
+        //     if (!resp.ok) {
+
+        //         return alertError()
+        //     }
+
+        //     closeLoadingAlert()
+
+        //     return setLocation('/encuesta/finish')
+
+        // } catch (error) {
+        //     return alertError({ text: "Hubo un error" })
+        // }
 
 
     }
@@ -280,6 +296,7 @@ export const useEncuesta = ({ idEncuesta, idUsuario }) => {
         handleOnchange,
         handleOnCLickOpcion,
         handleSubmit,
+        nextPreguntaStart,
         current,
         encuesta,
         length,
