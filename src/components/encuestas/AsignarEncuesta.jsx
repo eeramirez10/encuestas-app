@@ -1,78 +1,37 @@
-import React, { useEffect, useState } from 'react'
+
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { alertError, alertSuccess, closeLoadingAlert, loadingAlert } from '../../helpers/alerts';
 import { fetchAPI } from '../../helpers/fetch';
 import copy from 'copy-to-clipboard';
-import { useModal } from '../../hooks/useModal';
 import Loading from '../UI/Loading';
-
 import { Alert } from 'react-bootstrap';
 import Search from '../search/Search';
+import { useTable } from '../../hooks/useTable';
+import Paginacion from '../pagination/Paginacion';
 
 
 const AsignarEncuesta = ({ encuesta }) => {
 
-    const { show } = useModal()
 
-    const [usuarios, setUsuarios] = useState([]);
-
-    const [isLoading, setIsLoading] = useState(false);
-
-    const [busqueda, setBusqueda] = useState('');
-
-
-    useEffect(() => {
-
-        setIsLoading(true)
-
-        if (show) {
-
-            fetchAPI({
-                endpoint: 'usuarios',
-                method: 'GET'
-            })
-                .then(async (usuarios) => {
-                    const resp = await usuarios.json();
-
-                    setUsuarios(resp.usuarios.docs)
-                    setIsLoading(false)
-
-                })
-
-        }
+    const { 
+        rows: usuarios, 
+        handleOnBusqueda, 
+        handleIsLoading, 
+        isLoading, 
+        busqueda , 
+        paginacion, 
+        setPaginacion
+    } = useTable('usuarios');
 
 
-    }, [show, setUsuarios])
-
-    useEffect(() => {
-
-        setIsLoading(true)
 
 
-        fetchAPI({
-            endpoint: 'usuarios',
-            method: 'GET',
-            params: { search: busqueda }
-        })
-            .then(async (resp) => {
-                const body = await resp.json();
 
-                const { usuarios } = body;
-
-                setIsLoading(false)
-
-                setUsuarios(usuarios.docs)
-            })
-            .catch(() => {
-                setIsLoading(false)
-            })
-
-    }, [busqueda])
 
     const handleAsignar = async (usuario, i) => {
 
-        setIsLoading(true)
+        handleIsLoading(true)
 
 
         const asignar = await fetchAPI({
@@ -82,26 +41,14 @@ const AsignarEncuesta = ({ encuesta }) => {
                 idEncuesta: encuesta._id,
                 idUsuario: usuario._id
             }
-        })
+        });
 
-        const resp = await asignar.json();
+        handleIsLoading(false)
 
-
-
-        setIsLoading(false)
+        await asignar.json();
 
 
-        fetchAPI({
-            endpoint: 'usuarios',
-            method: 'GET'
-        })
-            .then(async (usuarios) => {
-                const resp = await usuarios.json();
 
-                setUsuarios(resp.usuarios.docs)
-
-
-            })
 
     }
 
@@ -167,10 +114,6 @@ const AsignarEncuesta = ({ encuesta }) => {
         alertSuccess({ title: "Copiado " })
     }
 
-    const handleOnBusqueda = (e) => {
-
-        setBusqueda(e.target.value);
-    }
 
 
 
@@ -223,7 +166,7 @@ const AsignarEncuesta = ({ encuesta }) => {
 
 
                                         return <tr key={usuario._id}>
-                                            <td>{i + 1}</td>
+                                            <td>{ paginacion.pagingCounter + i }</td>
                                             <td>{usuario.nombre} </td>
                                             <td>{usuario.email}</td>
                                             <td>{usuario.area}</td>
@@ -305,7 +248,11 @@ const AsignarEncuesta = ({ encuesta }) => {
 
                             </tbody>
                         </Table>
+
+
             }
+
+            <Paginacion {...paginacion} setPaginacion={setPaginacion} />
 
         </>
 

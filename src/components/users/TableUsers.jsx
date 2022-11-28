@@ -1,8 +1,11 @@
 import Table from 'react-bootstrap/Table';
 
 export const TableUsers = ({
-    usuarios
+    usuarios,
+    pagingCounter
 }) => {
+
+
     return (
         <Table striped bordered hover responsive>
             <thead>
@@ -18,7 +21,7 @@ export const TableUsers = ({
                 {usuarios.map((usuario, index) => (
 
                     <tr  key={usuario._id}>
-                        <td>{ index + 1 }</td>
+                        <td>{ pagingCounter + index }</td>
                         <td>{ usuario.nombre }</td>
                         <td>{ usuario.email}</td>
                         <td>{ usuario.sucursal}</td>

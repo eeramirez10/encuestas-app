@@ -1,12 +1,12 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { TableUsers } from '../../components/users/TableUsers'
-import { fetchAPI } from '../../helpers/fetch'
 import Card from 'react-bootstrap/Card';
 import { Button } from 'react-bootstrap';
 import CreateUser from '../../components/users/CreateUser';
 
 import Paginacion from '../../components/pagination/Paginacion';
+import { useTable } from '../../hooks/useTable';
 
 
 
@@ -14,20 +14,12 @@ import Paginacion from '../../components/pagination/Paginacion';
 
 const Usuarios = () => {
 
-    const [usuarios, setUsuarios] = useState([])
+
     const [show, setShow] = useState(false);
+    const { rows: usuarios, paginacion, setPaginacion } = useTable("usuarios");
 
-    useEffect(() => {
-        fetchAPI({ endpoint: "usuarios", method: "GET" })
-            .then(async (resp) => {
-                const body = await resp.json();
 
-                if (!body.ok) return console.log('Hubo un error')
 
-                setUsuarios(body.usuarios.docs)
-
-            })
-    }, [setUsuarios])
 
     const handleClose = () => {
         setShow(false)
@@ -36,6 +28,8 @@ const Usuarios = () => {
     const handleShow = () => {
         setShow(true)
     }
+
+
 
 
     return (
@@ -59,9 +53,11 @@ const Usuarios = () => {
                     </Card.Title>
 
 
-                    <TableUsers usuarios={usuarios} />
+                    <TableUsers usuarios={usuarios} pagingCounter={paginacion.pagingCounter}  />
 
-              
+                    <Paginacion {...paginacion} setPaginacion={setPaginacion} />
+
+
 
                 </Card.Body>
 
