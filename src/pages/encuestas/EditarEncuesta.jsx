@@ -140,6 +140,10 @@ const EditarEncuesta = ({ params }) => {
 
         if (!formIsValid) return
 
+        console.log(inputPreguntas)
+
+    
+
 
         try {
 

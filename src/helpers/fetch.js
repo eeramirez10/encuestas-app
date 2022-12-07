@@ -3,7 +3,7 @@ export const fetchAPI = ({endpoint, data, method, signal, params }) => {
     
     const heroku = `https://encuestas-back-end.herokuapp.com`;
     
-    // const local = 'http://localhost:3009';
+    const local = 'http://localhost:3009';
     
     const url = `${heroku}/api/${endpoint}`;
 

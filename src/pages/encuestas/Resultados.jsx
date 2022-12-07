@@ -8,7 +8,9 @@ const Resultados = ({ params }) => {
 
     const { idEncuesta, idUsuario } = params;
 
-    const { encuesta, current, nextPregunta, prevPregunta, length, } = useEncuesta({ idEncuesta, idUsuario })
+    const { encuesta, current, nextPregunta, prevPregunta, length, } = useEncuesta({ idEncuesta, idUsuario });
+
+    console.log(encuesta)
 
 
     return (

@@ -2,6 +2,8 @@ import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 const ListOfUsers = ({ usuarios }) => {
+
+    
     return (
         <>
             <ListGroup variant='flush' className='opciones'>
