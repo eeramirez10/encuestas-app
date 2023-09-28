@@ -1,35 +1,19 @@
 import React, { useEffect, useState } from 'react';
-
-
 import ListOfEncuestas from '../../components/encuestas/ListOfEncuestas'
 import Loading from '../../components/UI/Loading';
 import { alertError } from '../../helpers/alerts';
-
-import { fetchAPI } from '../../helpers/fetch'
+import { fetchEncuestas } from '../../services/fetchEncuestas';
 
 const Encuestas = () => {
 
     const [encuestas, setEncuestas] = useState([]);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-
-        setIsLoading(true);
-
-        fetchAPI({
-            endpoint: 'busqueda/coleccion/encuestas/todo',
-            method: 'GET'
-        })
-            .then(async (encuestas) => {
-                const resp = await encuestas.json()
-
-                setIsLoading(false)
-
-                setEncuestas([...resp.data])
-            }).catch( () =>{
-                setIsLoading(false)
-                alertError({text:"hubo un error, hablar con el admin"})
-            })
+        fetchEncuestas()
+            .then(encuestas => setEncuestas([...encuestas]))
+            .catch(() => alertError({ text: "hubo un error, hablar con el admin" }))
+            .finally(() => setIsLoading(false))
 
     }, [setEncuestas])
 
@@ -39,14 +23,9 @@ const Encuestas = () => {
 
             {
                 isLoading ?
-
-                   <Loading />
-
-
+                    <Loading />
                     :
-
                     <ListOfEncuestas encuestas={encuestas} />
-
             }
 
 

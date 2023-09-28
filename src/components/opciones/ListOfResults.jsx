@@ -133,7 +133,7 @@ const MultiOpciones = ({ opciones }) => {
                                             <Badge bg="primary" pill>{sucursal.usuarios.length} </Badge>
                                         </Accordion.Header>
                                         <Accordion.Body>
-                                            <ListOfUsers usuarios={sucursal.usuarios} />
+                                            {/* <ListOfUsers usuarios={sucursal.usuarios} /> */}
                                         </Accordion.Body>
                                     </Accordion.Item>
 

@@ -13,14 +13,16 @@ import Paginacion from '../pagination/Paginacion';
 
 const AsignarEncuesta = ({ encuesta }) => {
 
+    
 
-    const { 
-        rows: usuarios, 
-        handleOnBusqueda, 
-        handleIsLoading, 
-        isLoading, 
-        busqueda , 
-        paginacion, 
+
+    const {
+        rows: usuarios,
+        handleOnBusqueda,
+        handleIsLoading,
+        isLoading,
+        busqueda,
+        paginacion,
         setPaginacion
     } = useTable('usuarios');
 
@@ -146,108 +148,120 @@ const AsignarEncuesta = ({ encuesta }) => {
                         :
 
 
-                        <Table striped bordered hover size='sm' responsive>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nombre</th>
-                                    <th>email</th>
-                                    <th>area</th>
-                                    <th>sucursal</th>
-                                    <th>contestada</th>
-                                    <th> link </th>
-                                    <th>Accion</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    usuarios.map((usuario, i) => {
+                        <div>
+
+                            <Button variant='danger' style={{ display:'block', margin:'0 0 10px auto' }} >
+                                Por contestar
+                            </Button>
+
+
+                            <Table striped bordered hover size='sm' responsive>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>email</th>
+                                        <th>area</th>
+                                        <th>sucursal</th>
+                                        <th>contestada</th>
+                                        <th> link </th>
+                                        <th>Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        usuarios.map((usuario, i) => {
 
 
 
-                                        return <tr key={usuario._id}>
-                                            <td>{ paginacion.pagingCounter + i }</td>
-                                            <td>{usuario.nombre} </td>
-                                            <td>{usuario.email}</td>
-                                            <td>{usuario.area}</td>
-                                            <td>{usuario.sucursal}</td>
+                                            return <tr key={usuario._id}>
+                                                <td>{paginacion.pagingCounter + i}</td>
+                                                <td>{usuario.nombre} </td>
+                                                <td>{usuario.email}</td>
+                                                <td>{usuario.area}</td>
+                                                <td>{usuario.sucursal}</td>
 
 
-                                            <td> {isEncuestaContestada(usuario)} </td>
+                                                <td> {isEncuestaContestada(usuario)} </td>
 
-                                            {
+                                                {
 
-                                                isEncuestaAsignada(usuario) ?
+                                                    isEncuestaAsignada(usuario) ?
 
-                                                    <td> Si </td>
+                                                        <td> Si </td>
 
-                                                    :
-                                                    <td> Falta asignar </td>
-
-
-                                            }
+                                                        :
+                                                        <td> Falta asignar </td>
 
 
+                                                }
 
-                                            {
 
-                                                isEncuestaAsignada(usuario) ?
 
-                                                    <>
+                                                {
+
+                                                    isEncuestaAsignada(usuario) ?
+
+                                                        <>
+                                                            <td>
+                                                                <Button
+                                                                    variant="success"
+                                                                    size='sm'
+                                                                    className='mx-1'
+                                                                    onClick={() => enviarEncuesta(usuario)}
+                                                                >
+                                                                    enviar
+                                                                </Button>
+                                                                <Button
+                                                                    variant="info"
+                                                                    size='sm'
+
+                                                                    onClick={() => handleCopiar(usuario)}
+                                                                >
+                                                                    copiar
+                                                                </Button>
+
+                                                            </td>
+
+
+
+                                                        </>
+
+
+
+
+
+                                                        :
+
+
                                                         <td>
                                                             <Button
-                                                                variant="success"
+                                                                variant="primary"
                                                                 size='sm'
-                                                                className='mx-1'
-                                                                onClick={() => enviarEncuesta(usuario)}
-                                                            >
-                                                                enviar
-                                                            </Button>
-                                                            <Button
-                                                                variant="info"
-                                                                size='sm'
+                                                                onClick={() => handleAsignar(usuario, i)}
+                                                                disabled={isLoading}
 
-                                                                onClick={() => handleCopiar(usuario)}
                                                             >
-                                                                copiar
+                                                                {isLoading ? 'Loading…' : 'Asignar'}
                                                             </Button>
-
                                                         </td>
 
 
-
-                                                    </>
-
+                                                }
 
 
+                                            </tr>
+
+                                        })
+                                    }
+
+                                </tbody>
+                            </Table>
+
+                        </div>
 
 
-                                                    :
 
-
-                                                    <td>
-                                                        <Button
-                                                            variant="primary"
-                                                            size='sm'
-                                                            onClick={() => handleAsignar(usuario, i)}
-                                                            disabled={isLoading}
-
-                                                        >
-                                                            {isLoading ? 'Loading…' : 'Asignar'}
-                                                        </Button>
-                                                    </td>
-
-
-                                            }
-
-
-                                        </tr>
-
-                                    })
-                                }
-
-                            </tbody>
-                        </Table>
 
 
             }

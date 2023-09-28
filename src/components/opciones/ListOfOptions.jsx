@@ -15,7 +15,7 @@ const ListOfOptions = ({
             {
                 opciones.map((opcion, index) => {
 
-                    
+                        console.log(opcion)
 
                    return < div key={opcion._id}>
                         {

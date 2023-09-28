@@ -47,7 +47,7 @@ function App() {
       <Router>
 
 
-        <SideBar />
+        {/* <SideBar /> */}
 
         <div id="detail">
 
